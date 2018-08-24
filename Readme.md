@@ -1,16 +1,23 @@
 
-### R packages 
+### Dependencies 
+* Softwares 
+    * [fastp]
+    * [STAR] 
+    * [RSEM]
+    * [DAtools](https://github.com/likelet/DAtools)
+    * [gseapy](https://pypi.org/project/gseapy/) 
+* R packages 
  
         #bioconductor package
         dep.lib <- c("DESeq2","ReactomePA","CLusterProfile","org.Hs.eg.db","pathview","topGO")
-        
         c.lib<-c("ggplot2","ggpubr","ggrepel","pheatmap","FactoMineR")
+
 
 
 ### Input file  
 
 * `sampleInfor.txt`  
-sampleInfor presents the experimental design of your dataset, it is just like a design file of `DESeq2` and `EdgeR` input.  
+sampleInfor presents the experimental design of your data set, it is just like a design file of `DESeq2` and `EdgeR` input.  
 
         	Type
         P1003NA	N
@@ -38,3 +45,4 @@ specify which group to compare in your differential expression analysis
 * `fastq_ext`  
     
     suffix of your raw reads file. 
+
