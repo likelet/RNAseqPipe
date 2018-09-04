@@ -92,13 +92,14 @@ if(params.skip_qc){
         label 'para'
 
         publishDir pattern: "*.bam",
-                path: { params.out_folder + "/Result/Star_alignment" }, mode: 'mv', overwrite: true
+                path: { params.out_folder + "/Result/Star_alignment" }, mode: 'move', overwrite: true
 
         input:
         set val(samplename), file(pair) from reads_for_fastqc
 
         output:
         file "${file_tag_new}.genes.results" into counting_file
+        file "*.bam" into alignment_bamfile
 
         shell:
         println print_purple("Start analysis with RSEM  " + samplename)
@@ -155,7 +156,7 @@ if(params.skip_qc){
  Step : Quantification  by star and RSEM
  */
 
-    process RSEM_quantification  {
+    process RSEM_quantification_without_fastp {
 
         tag { file_tag }
         label 'para'
@@ -195,7 +196,7 @@ if(params.skip_qc){
 process collapse_matrix{
     tag { file_tag }
 
-    publishDir pattern: "*.count.matix",
+    publishDir pattern: "*.count.matrix",
             path: { params.out_folder + "/Result/express_matrix" }, mode: 'copy', overwrite: true
 
     input:
@@ -210,8 +211,8 @@ process collapse_matrix{
     file_tag_new = file_tag
     samplename = file_tag
     """
-     java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.count.matix -count
-     perl  ${baseDir}/bin/Ensem2Symbol.pl ${samplename}.count.matix > forDE.count.matrix
+     java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.count.matrix -count
+     perl  ${baseDir}/bin/Ensem2Symbol.pl ${samplename}.count.matrix > forDE.count.matrix
 
 
     """
@@ -230,22 +231,24 @@ if(designfile!=null){
 
         file countMatrix from count_matrix_forDE
         file designfile
-        file comparestr from compareLines
+        val compareLines
 
         output:
 
-        set val(comparestr),file("${comparestr}.deseq.xls") into DE_result
-
+        set val(comstr),file("${comstr}.deseq.xls") into DE_result
+        set "*" into DE_result_out
         shell:
-        file_tag = 'DESeq2: '+comparestr
+        comstr = compareLines
+        file_tag = 'DESeq2: '+compareLines
         file_tag_new = file_tag
         """
         ln -s ${baseDir}/bin/PCAplot.R 
-        Rscript ${baseDir}/bin/DESeq2.R ${countMatrix} ${designfile} ./ ${comparestr} 
+        Rscript ${baseDir}/bin/DESeq2.R ${countMatrix} ${designfile} ./ ${comstr} 
         """
 
     }
 
+    /*
     process GO_kegg_enrichment_analysis{
         tag {file_tag}
 
@@ -257,17 +260,17 @@ if(designfile!=null){
         file val(comparestr),file("${comparestr}.deseq.xls") from DE_result
         file designfile
 
+
         shell:
         file_tag = comparestr
         file_tag_new = file_tag
         """
-        Rscript ${baseDir}/bin/GO_KEGG_Reactome_enrich_DEG.R ${comparestr}.deseq.xls
+        Rscript ${baseDir}/bin/GO_KEGG_Reactome_enrich_DEG.R ${file_tag_new}.deseq.xls
         """
 
     }
+    */
 
-    process GSEA{
 
-    }
 
 }
