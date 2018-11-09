@@ -53,7 +53,7 @@ def print_white = {  str -> ANSI_WHITE + str + ANSI_RESET }
 version="v0.2.31"
 //=======================================================================================
 // Nextflow Version check
-if( !nextflow.version.matches('0.25+') ) {
+if( !nextflow.version.matches('0.30+') ) {
     println print_yellow("This workflow requires Nextflow version 0.26 or greater -- You are running version ")+ print_red(nextflow.version)
     exit 1
 }
@@ -65,11 +65,20 @@ datoolPath = file(params.dapath)
 gene_gtf = file(params.gtf)
 // star-rsem index
 star_index =  params.star_index
+
+designfile=null
+comparefile=null
+
 //design file
-designfile = file(params.designfile)
+if(params.designfile!="") {
+    designfile = file(params.designfile)
+}
 //compare.txt
-File comparefile = new File(params.comp_file)
-compareLines = Channel.from(comparefile.readLines())
+if(params.comp_file!=""){
+    File comparefile = new File(params.comp_file)
+    compareLines = Channel.from(comparefile.readLines())
+}
+
 
 /*
  Step : Fastqc by fastp
@@ -162,7 +171,7 @@ if(params.skip_qc){
         label 'para'
 
         publishDir pattern: "*.bam",
-                path: { params.out_folder + "/Result/Star_alignment" }, mode: 'mv', overwrite: true
+                path: { params.out_folder + "/Result/Star_alignment" }, mode: 'link', overwrite: true
 
         input:
         set val(samplename), file(pair) from readPairs_for_discovery
@@ -170,7 +179,7 @@ if(params.skip_qc){
 
         output:
         file "${file_tag_new}.genes.results" into counting_file
-
+        set val(file_tag_new), file ("${file_tag_new}.STAR.genome.bam") into bamfile_for_qualimap
         shell:
         println print_purple("Start analysis with RSEM  " + samplename)
         file_tag = samplename
@@ -192,6 +201,30 @@ if(params.skip_qc){
     }
 }
 
+process run_qualimap{
+    tag { file_tag }
+
+    publishDir pattern: "*.pdf",
+            path: { params.out_folder + "/Result/Qualimap" }, mode: 'copy', overwrite: true
+
+    input:
+    set val(samplename), file(bam_for_qualimap) from bamfile_for_qualimap
+    file gene_gtf
+
+    output:
+
+    shell:
+    file_tag = samplename
+    file_tag_new = file_tag
+    samplename = file_tag
+
+    """
+     qualimap bamqc -bam ${bam_for_qualimap} -outfile ${file_tag_new}_qualimap.pdf
+    """
+
+}
+
+
 
 process collapse_matrix{
     tag { file_tag }
@@ -211,16 +244,16 @@ process collapse_matrix{
     file_tag_new = file_tag
     samplename = file_tag
     """
-     java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.count.matrix -count
+     java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.count.matrix -count -gtf $gene_gtf
+     java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.count.matrix -tpm -gtf $gene_gtf
      perl  ${baseDir}/bin/Ensem2Symbol.pl ${samplename}.count.matrix > forDE.count.matrix
 
 
     """
 
-
 }
 
-if(designfile!=null){
+if(designfile!=null && comparefile!=null){
     process Differential_Expression_analysis{
         tag {file_tag}
 
@@ -248,28 +281,6 @@ if(designfile!=null){
 
     }
 
-    /*
-    process GO_kegg_enrichment_analysis{
-        tag {file_tag}
-
-        publishDir pattern: "",
-                path: { params.out_folder + "/Result/GO_KEGG" }, mode: 'copy', overwrite: true
-
-        input:
-
-        file val(comparestr),file("${comparestr}.deseq.xls") from DE_result
-        file designfile
-
-
-        shell:
-        file_tag = comparestr
-        file_tag_new = file_tag
-        """
-        Rscript ${baseDir}/bin/GO_KEGG_Reactome_enrich_DEG.R ${file_tag_new}.deseq.xls
-        """
-
-    }
-    */
 
 
 

@@ -1,9 +1,15 @@
 
+### Quick start  for reproductive analysis 
+
+    nextflow -c nextflow.config run main.nf -resume -with-trace  -with-timeline timeline.html
+
+
 ### Dependencies 
 * Softwares 
     * [fastp]
     * [STAR] 
     * [RSEM]
+    * [Qualimap]
     * [DAtools](https://github.com/likelet/DAtools)
     * [gseapy](https://pypi.org/project/gseapy/) 
 * R packages 
