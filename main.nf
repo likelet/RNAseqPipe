@@ -101,14 +101,14 @@ if(params.skip_qc){
         label 'para'
 
         publishDir pattern: "*.bam",
-                path: { params.out_folder + "/Result/Star_alignment" }, mode: 'move', overwrite: true
+                path: { params.outdir + "/Result/Star_alignment" }, mode: 'move', overwrite: true
 
         input:
         set val(samplename), file(pair) from reads_for_fastqc
 
         output:
         file "${file_tag_new}.genes.results" into counting_file
-        file "*.bam" into alignment_bamfile
+        set val(file_tag_new), file ("${file_tag_new}.STAR.genome.bam") into bamfile_for_qualimap
 
         shell:
         println print_purple("Start analysis with RSEM  " + samplename)
@@ -117,7 +117,7 @@ if(params.skip_qc){
         star_threads = 40
 
 
-        println print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end mode")
+        println print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end mode")
         """
              rsem-calculate-expression -p ${star_threads} \
                 --no-bam-output --star \
@@ -135,7 +135,7 @@ if(params.skip_qc){
         label 'qc'
 
         publishDir pattern: "*.html",
-                path: { params.out_folder + "/Result/QC" }, mode: 'copy', overwrite: true
+                path: { params.outdir + "/Result/QC" }, mode: 'copy', overwrite: true
 
         input:
         set val(samplename), file(fastq_file) from reads_for_fastqc
@@ -171,7 +171,7 @@ if(params.skip_qc){
         label 'para'
 
         publishDir pattern: "*.bam",
-                path: { params.out_folder + "/Result/Star_alignment" }, mode: 'link', overwrite: true
+                path: { params.outdir + "/Result/Star_alignment" }, mode: 'link', overwrite: true
 
         input:
         set val(samplename), file(pair) from readPairs_for_discovery
@@ -187,7 +187,7 @@ if(params.skip_qc){
         star_threads = 40
 
 
-        println print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end mode")
+        println print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end mode")
         """
              rsem-calculate-expression -p ${star_threads} \
                 --no-bam-output --star \
@@ -205,7 +205,7 @@ process run_qualimap{
     tag { file_tag }
 
     publishDir pattern: "*.pdf",
-            path: { params.out_folder + "/Result/Qualimap" }, mode: 'copy', overwrite: true
+            path: { params.outdir + "/Result/Qualimap" }, mode: 'copy', overwrite: true
 
     input:
     set val(samplename), file(bam_for_qualimap) from bamfile_for_qualimap
@@ -229,8 +229,8 @@ process run_qualimap{
 process collapse_matrix{
     tag { file_tag }
 
-    publishDir pattern: "*.count.matrix",
-            path: { params.out_folder + "/Result/express_matrix" }, mode: 'copy', overwrite: true
+    publishDir pattern: "*.matrix",
+            path: { params.outdir + "/Result/express_matrix" }, mode: 'copy', overwrite: true
 
     input:
     file abundance_tsv_matrix from counting_file.collect()
@@ -245,7 +245,8 @@ process collapse_matrix{
     samplename = file_tag
     """
      java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.count.matrix -count -gtf $gene_gtf
-     java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.count.matrix -tpm -gtf $gene_gtf
+     java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.tpm.matrix -tpm -gtf $gene_gtf
+     java -jar ${datoolPath} -MM -mode RSEM ./ ${samplename}.fpkm.matrix -fpkm -gtf $gene_gtf
      perl  ${baseDir}/bin/Ensem2Symbol.pl ${samplename}.count.matrix > forDE.count.matrix
 
 
@@ -258,7 +259,7 @@ if(designfile!=null && comparefile!=null){
         tag {file_tag}
 
         publishDir pattern: "{*.mat,*.xls,*.pdf}",
-                path: { params.out_folder + "/Result/DEG" }, mode: 'copy', overwrite: true
+                path: { params.outdir + "/Result/DEG" }, mode: 'copy', overwrite: true
 
         input:
 

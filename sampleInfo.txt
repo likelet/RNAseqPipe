@@ -1,0 +1,9 @@
+	Type
+AGS-shControl-1	C
+AGS-shControl-2	C
+AGS-shControl-3	C
+AGS-shControl-4	C
+AGS-shTET1-1	T
+AGS-shTET1-2	T
+AGS-shTET1-3	T
+AGS-shTET1-4	T
