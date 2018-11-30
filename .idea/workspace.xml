@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="486564ba-731b-41d1-ac64-f322055a730d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dockerfile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/conf/C2.config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/conf/base.config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/environment.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sampleInfo.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bin/get_preRankfile_for_GSEA.pl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/conf/C1.config" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/conf/S1.config" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/conf/S2.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/C2.config" afterPath="$PROJECT_DIR$/conf/C2.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/base.config" afterPath="$PROJECT_DIR$/conf/base.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.nf" afterPath="$PROJECT_DIR$/main.nf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nextflow.config" afterPath="$PROJECT_DIR$/nextflow.config" />
     </list>
@@ -25,8 +26,18 @@
       <file leaf-file-name="main.nf" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.nf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="100" column="20" lean-forward="true" selection-start-line="100" selection-start-column="20" selection-end-line="100" selection-end-column="20" />
+            <state relative-caret-position="165">
+              <caret line="333" column="19" lean-forward="false" selection-start-line="333" selection-start-column="19" selection-end-line="333" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="get_preRankfile_for_GSEA.pl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/get_preRankfile_for_GSEA.pl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="727">
+              <caret line="35" column="42" lean-forward="true" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -35,8 +46,18 @@
       <file leaf-file-name="base.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf/base.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1805">
-              <caret line="23" column="25" lean-forward="false" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
+            <state relative-caret-position="744">
+              <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GSEA_prepare_database.pl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/GSEA_prepare_database.pl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="943">
+              <caret line="102" column="24" lean-forward="true" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -45,18 +66,8 @@
       <file leaf-file-name="C2.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf/C2.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sampleInfo.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sampleInfo.txt">
-          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
-              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <caret line="9" column="69" lean-forward="false" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -65,28 +76,8 @@
       <file leaf-file-name="nextflow.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nextflow.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="19" column="29" lean-forward="false" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="environment.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/environment.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="12" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edgeR.R" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/edgeR.R">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="8" column="50" lean-forward="false" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="50" />
+            <state relative-caret-position="695">
+              <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -96,29 +87,37 @@
         <entry file="file://$PROJECT_DIR$/compare.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+              <caret line="0" column="6" lean-forward="true" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DESeq2.R" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/DESeq2.R">
+      <file leaf-file-name="C1.config" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/conf/C1.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="29" column="32" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="32" />
-              <folding>
-                <element signature="e#1759#3872#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Report.R" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/Report.R">
+      <file leaf-file-name="S1.config" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/conf/S1.config">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="S2.config" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/conf/S2.config">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -133,7 +132,6 @@
       <find>fasta_ref</find>
       <find>des</find>
       <find>samplen</find>
-      <find>compareLines</find>
       <find>comparestr</find>
       <find>mv</find>
       <find>next</find>
@@ -141,10 +139,24 @@
       <find>designfile</find>
       <find>single</find>
       <find>}</find>
+      <find>out_folder</find>
+      <find>read</find>
+      <find>fastq_ext</find>
+      <find>params.container</find>
+      <find>Result/</find>
+      <find>comp_file</find>
+      <find>bamqc</find>
+      <find>max_cpus</find>
+      <find>Result</find>
+      <find>compareLines_for_GSEA</find>
+      <find>compareLines</find>
+      <find>comparefile</find>
     </findStrings>
     <replaceStrings>
       <replace>star_index</replace>
+      <replace>read</replace>
       <replace>outdir</replace>
+      <replace>comparefile</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -166,18 +178,19 @@
         <option value="$PROJECT_DIR$/bin/GO_KEGG_Reactome_enrich_DEG.R" />
         <option value="$PROJECT_DIR$/bin/GSEA_prepare.pl" />
         <option value="$PROJECT_DIR$/Readme.md" />
-        <option value="$PROJECT_DIR$/compare.txt" />
-        <option value="$PROJECT_DIR$/nextflow.config" />
         <option value="$PROJECT_DIR$/environment.yml" />
+        <option value="$PROJECT_DIR$/conf/base.config" />
+        <option value="$PROJECT_DIR$/nextflow.config" />
+        <option value="$PROJECT_DIR$/compare.txt" />
+        <option value="$PROJECT_DIR$/conf/C2.config" />
+        <option value="$PROJECT_DIR$/bin/get_preRankfile_for_GSEA.pl" />
         <option value="$PROJECT_DIR$/main.nf" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2596" />
-    <option name="y" value="383" />
-    <option name="width" value="2560" />
-    <option name="height" value="1057" />
+    <option name="width" value="1464" />
+    <option name="height" value="1440" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -248,11 +261,12 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/conf" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -608,11 +622,18 @@
       <option name="project" value="LOCAL" />
       <updated>1541758071526</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add qualimap">
+      <created>1542875411755</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1542875411756</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2596" y="383" width="2560" height="1057" extended-state="0" />
+    <frame x="0" y="0" width="1464" height="1440" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -620,7 +641,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41902834" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10552764" sideWeight="0.5027322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -628,9 +649,10 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21835938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3818306" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10552764" sideWeight="0.49726775" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -642,7 +664,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -659,43 +680,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bin/Mapping_stat_barplot.R">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="68" column="9" lean-forward="false" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nextflow.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" column="13" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Readme.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="528">
-            <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/DESeq2.R">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="17" />
-          <folding>
-            <element signature="e#1759#3872#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bin/edgeR.R">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -879,14 +863,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/GSEA_prepare_database.pl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bin/GSEA_prepare.pl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2184">
@@ -922,42 +898,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compare.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/base.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1805">
-          <caret line="23" column="25" lean-forward="false" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/C2.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sampleInfo.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nextflow.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="19" column="29" lean-forward="false" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -973,7 +917,7 @@
     <entry file="file://$PROJECT_DIR$/environment.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
-          <caret line="18" column="12" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+          <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -996,10 +940,82 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/conf/S1.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/S2.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/C1.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/base.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="744">
+          <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/GSEA_prepare_database.pl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="943">
+          <caret line="102" column="24" lean-forward="true" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compare.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="6" lean-forward="true" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/C2.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="9" column="69" lean-forward="false" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nextflow.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="695">
+          <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/get_preRankfile_for_GSEA.pl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="727">
+          <caret line="35" column="42" lean-forward="true" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.nf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="100" column="20" lean-forward="true" selection-start-line="100" selection-start-column="20" selection-end-line="100" selection-end-column="20" />
+        <state relative-caret-position="165">
+          <caret line="333" column="19" lean-forward="false" selection-start-line="333" selection-start-column="19" selection-end-line="333" selection-end-column="19" />
           <folding />
         </state>
       </provider>
