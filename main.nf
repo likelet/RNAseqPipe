@@ -98,14 +98,22 @@ if (params.help) {
 }
 
 
+
+
+// Configurable variables
+params.name = false
+params.multiqc_config = "$baseDir/conf/multiqc_config.yaml"
+params.email = false
+mail=params.email
 // read file
 datoolPath = file(params.dapath)
 if( !datoolPath.exists() ) exit 1, print_red("DAtools  not found: ${params.dapath}")
 gene_gtf = file(params.gtf)
-if( !gene_gtf.exists() ) exit 1, print_red("GTF file not found: ${params.dapath}")
+if( !gene_gtf.exists() ) exit 1, print_red("GTF file not found: ${params.gtf}")
 // star-rsem index
 star_index =  params.star_index
-
+gseapath = params.gseapath
+gsea_pathway = params.gsea_pathway
 
 //design file
 if(params.designfile) {
@@ -124,11 +132,30 @@ if(params.comparefile){
 }
 compareLines.into{compareLines_for_DE; compareLines_for_GSEA}
 
+
+
+// Check parameters
+
+//Checking parameters
+log.info print_purple("You are running RNAseqPipe-SYSUCC with the following parameters:")
+log.info print_purple("Checking parameters ...")
+log.info print_yellow("=====================================")
+log.info print_yellow("Fastq file extension:           ") + print_green(params.read)
+log.info print_yellow("Single end :                    ") + print_green(params.singleEnd)
+log.info print_yellow("Strand specific condition:      ") + print_green(params.strand)
+log.info print_yellow("Output folder:                  ") + print_green(params.outdir)
+log.info print_yellow("STAR index path:                ") + print_green(params.star_index)
+log.info print_yellow("GTF path:                       ") + print_green(params.gtf)
+log.info print_yellow("Design file  path:              ") + print_green(params.designfile)
+log.info print_yellow("Compare file path:              ") + print_green(params.comparefile)
+log.info print_yellow("=====================================")
+log.info "\n"
+
 /*
  Step : Fastqc by fastp
  */
 
-reads = params.input_folder + params.read
+reads = params.read
 
 Channel.fromFilePairs(reads, size: params.singleEnd ? 1 : 2)
         .ifEmpty {
@@ -170,6 +197,7 @@ if(params.skip_qc){
                 --paired-end  ${pair[0]} ${pair[1]} ${star_index} ${file_tag_new}
                 
         """
+
     }
 }else{
     process Run_FastP {
@@ -184,7 +212,7 @@ if(params.skip_qc){
         set val(samplename), file(fastq_file) from reads_for_fastqc
 
         output:
-        file "*.html" into fastqc_for_waiting
+        file "*.html" into fastqc_for_waiting,fastqc_for_multiqc
         set val(fastq_tag), file('*qc.fq.gz')  into readPairs_for_discovery
         shell:
         fastq_tag = samplename
@@ -203,7 +231,6 @@ if(params.skip_qc){
         }
     }
 
-    fastqc_for_waiting = fastqc_for_waiting.first()
 /*
  Step : Quantification  by star and RSEM
  */
@@ -268,6 +295,7 @@ process run_qualimap{
     file gene_gtf
 
     output:
+    file "*" into qualimap_result_for_multiqc
 
     shell:
     file_tag = samplename
@@ -288,7 +316,7 @@ process collapse_matrix{
     tag { file_tag }
 
     publishDir pattern: "*.matrix",
-            path: { params.outdir + "/express_matrix" }, mode: 'copy', overwrite: true
+            path: { params.outdir + "/Express_matrix" }, mode: 'copy', overwrite: true
 
     input:
     file abundance_tsv_matrix from counting_file.collect()
@@ -327,7 +355,7 @@ if(params.designfile && params.comparefile){
 
         file countMatrix from count_matrix_forDE
         file designfile
-        val compareLines_for_DE
+        val compare_str from compareLines_for_DE
 
         output:
 
@@ -335,8 +363,8 @@ if(params.designfile && params.comparefile){
         file "*" into DE_result_out
 
         shell:
-        comstr = compareLines
-        file_tag = 'DESeq2: '+compareLines
+        comstr = compare_str
+        file_tag = 'DESeq2: '+comstr
         file_tag_new = file_tag
         """
         ln -s ${baseDir}/bin/PCAplot.R .
@@ -370,7 +398,7 @@ if(params.designfile && params.comparefile){
 
         """
         # generate GSEA rnk file 
-         perl ${baseDir}/get_preRankfile_for_GSEA.pl ${fpkm_matrix} ${designfile} ${compare_str} 
+         perl ${baseDir}/bin/get_preRankfile_for_GSEA.pl ${fpkm_matrix} ${designfile} ${compare_str} ${compare_str}.rnk
          java -cp ${gseapath} xtools.gsea.GseaPreranked \
           -gmx  ${gsea_pathway}\
           -norm meandiv -nperm 1000 \
@@ -383,16 +411,38 @@ if(params.designfile && params.comparefile){
 
 }
 
+/*
+MultiQC for data quality report
+ */
+
+process Run_MultiQC {
+    publishDir "${params.outdir}/MultiQC", mode: 'copy'
+
+    input:
+    file ('*') from fastqc_for_multiqc.collect()
+    file ('*') from qualimap_result_for_multiqc.collect()
+
+    output:
+    file "*multiqc_report.html" into multiqc_report
+    file "*_data"
+
+    when:
+    !params.skip_multiqc
+
+    script:
+    """
+	    multiqc --force --interactive .
+	 """
+}
 
 
 
-
-
-
-
+/*
+Working completed message
+ */
 workflow.onComplete {
 
-    log.info print_green("RNAseq Pipeline from SYSUCC Complete!")
+    log.info print_green("Cheers! RNAseq Pipeline from SYSUCC run Complete!")
 
     //email information
     if (params.mail) {
@@ -416,7 +466,7 @@ workflow.onComplete {
 
 
 }
-
 workflow.onError {
+
     println print_yellow("Oops... Pipeline execution stopped with the following message: ")+print_red(workflow.errorMessage)
 }

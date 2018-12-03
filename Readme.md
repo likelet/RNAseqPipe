@@ -11,7 +11,7 @@
     * [RSEM]
     * [Qualimap]
     * [DAtools](https://github.com/likelet/DAtools)
-    * [gseapy](https://pypi.org/project/gseapy/) 
+    * [GSEA]
 * R packages 
  
         #bioconductor package
@@ -22,10 +22,10 @@
 
 ### Input file  
 
-* `sampleInfor.txt`  
+* `design.txt`  
 sampleInfor presents the experimental design of your data set, it is just like a design file of `DESeq2` and `EdgeR` input.  
 
-        	Type
+        Sample	Type
         P1003NA	N
         P1003TA	T
         P1162NA	N
@@ -37,18 +37,39 @@ sampleInfor presents the experimental design of your data set, it is just like a
 * `compare.txt`
 specify which group to compare in your differential expression analysis 
         
-        A_vs_B
-        B_vd_A
-`A` and `B` are the identical strings as the `Type` column in `sampleInfor.txt`.
+        T_vs_N
+       
+`T` and `N` are the identical strings as the `Type` column in `design.txt`.
 
 
-### parameters 
+### command parameters 
 
-* `skip_qc`   
 
-    set `ture` if you are going to skip qc step 
 
-* `fastq_ext`  
+* `--reads`  
     
     suffix of your raw reads file. 
+    
+* `--designfile`  
+    
+    design file  
+    
+* `--comparefile`  
+    
+    compare file 
+    
+* `--gene_gtf`  
+    
+    gtf file for building your STAR index 
 
+* `--singleEnd`  
+    
+    `true` when using a single End reads input, default `false` 
+
+* `--strand`  
+    
+    `true` when using strand specific library , default `false` 
+     
+* `--skip_qc`   
+
+    set `ture` if you are going to skip qc step 
