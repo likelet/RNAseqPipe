@@ -50,7 +50,7 @@ def print_white = {  str -> ANSI_WHITE + str + ANSI_RESET }
 
 //Help information
 // Nextflow  version
-version="v0.2.31"
+version="v0.0.1"
 //=======================================================================================
 // Nextflow Version check
 if( !nextflow.version.matches('0.30+') ) {
@@ -441,9 +441,9 @@ process Run_MultiQC {
 Working completed message
  */
 workflow.onComplete {
-
+    log.info print_green("=================================================")
     log.info print_green("Cheers! RNAseq Pipeline from SYSUCC run Complete!")
-
+    log.info print_green("=================================================")
     //email information
     if (params.mail) {
         recipient = params.mail
