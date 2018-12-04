@@ -130,7 +130,7 @@ if(params.comparefile){
 }else{
     compareLines=""
 }
-compareLines.into{compareLines_for_DE; compareLines_for_GSEA}
+compareLines.into{compareLines_for_DE; compareLines_for_GSEA;compareLines_for_DE_without_REP}
 
 
 
@@ -248,7 +248,7 @@ if(params.skip_qc){
         file tempfiles from fastqc_for_waiting // just for waiting
 
         output:
-        file "${file_tag_new}.genes.results" into counting_file
+        file "${file_tag_new}.genes.results" into counting_file,couting_file_DE_without_Rep
         set val(file_tag_new), file ("${file_tag_new}.STAR.genome.bam") into bamfile_for_qualimap
         shell:
         println print_purple("Start analysis with RSEM  " + samplename)
@@ -303,7 +303,7 @@ process run_qualimap{
     samplename = file_tag
 
     """
-     qualimap rnaseq -bam ${bam_for_qualimap} -gtf ${gene_gtf} -s -outfile ${file_tag_new}_qualimap.pdf
+     qualimap rnaseq -bam ${bam_for_qualimap} -gtf ${gene_gtf} -s -outfile ${file_tag_new}_qualimap.pdf --java-mem-size=${task.memory}
     """
 
 }
@@ -344,7 +344,7 @@ process collapse_matrix{
 /*
   Differential expression analysis
  */
-if(params.designfile && params.comparefile){
+if( params.comparefile ){
     process Differential_Expression_analysis{
         tag {file_tag}
 
@@ -362,6 +362,9 @@ if(params.designfile && params.comparefile){
         set val(comstr),file("${comstr}.deseq.xls") into DE_result
         file "*" into DE_result_out
 
+        when:
+        (params.designfile==true) && (params.without_replicate==false)
+
         shell:
         comstr = compare_str
         file_tag = 'DESeq2: '+comstr
@@ -369,6 +372,147 @@ if(params.designfile && params.comparefile){
         """
         ln -s ${baseDir}/bin/PCAplot.R .
         Rscript ${baseDir}/bin/DESeq2.R ${countMatrix} ${designfile} ./ ${comstr} 
+        """
+
+    }
+/*
+ Differential expression analysis without replicates
+ */
+    process Differential_Expression_analysis_without_RF{
+        tag {file_tag}
+
+        publishDir pattern: "{*.mat,*.xls,*.pdf}",
+                path: { params.outdir + "/DEG_without_Rep" }, mode: 'copy', overwrite: true
+
+        input:
+
+        file abundance_tsv_matrix from couting_file_DE_without_Rep.collect()
+        file gene_gtf
+        val compare_str from compareLines_for_DE_without_REP
+
+        output:
+
+        file "*"
+
+        when:
+        params.without_replicate==true
+
+        shell:
+        comstr = compare_str
+        file_tag = 'PoissonTest: '+comstr
+        file_tag_new = file_tag
+        comstr_a = comstr.split("_vs_")
+        """
+        java -jar ${datoolPath} -RNAseq -mode poissonDE \
+                                ${comstr_a[0]}*.genes.results  ${comstr_a[0]}.genes.results ${comstr} \
+                                -gtf ${gene_gtf}
+        """
+
+    }
+/*
+ Gene Set Enrichment Analysis
+ */
+
+    process GSEA_analysis{
+        tag { file_tag }
+
+        publishDir pattern: "*",
+                path: { params.outdir + "/GSEA_analysis" }, mode: 'move', overwrite: true
+
+        input:
+        file fpkm_matrix from fpkm_matrix_for_GSEA
+        file designfile
+        val compare_str from compareLines_for_GSEA
+
+
+        output:
+        file "${compare_str}*" into gsea_out
+
+        when:
+        (params.designfile==true) && (params.without_replicate==false)
+
+        shell:
+        file_tag = compare_str
+        file_tag_new = file_tag
+        samplename = file_tag
+
+        """
+        # generate GSEA rnk file 
+         perl ${baseDir}/bin/get_preRankfile_for_GSEA.pl ${fpkm_matrix} ${designfile} ${compare_str} ${compare_str}.rnk
+         java -cp ${gseapath} xtools.gsea.GseaPreranked \
+          -gmx  ${gsea_pathway}\
+          -norm meandiv -nperm 1000 \
+          -rnk  ${compare_str}.rnk \
+          -scoring_scheme weighted -rpt_label ${compare_str} \
+          -create_svgs true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500 -set_min 15 -zip_report false \
+          -out ./ -gui false
+        """
+    }
+
+}
+
+if(params.designfile && params.comparefile ){
+    process Differential_Expression_analysis{
+        tag {file_tag}
+
+        publishDir pattern: "{*.mat,*.xls,*.pdf}",
+                path: { params.outdir + "/DEG" }, mode: 'copy', overwrite: true
+
+        input:
+
+        file countMatrix from count_matrix_forDE
+        file designfile
+        val compare_str from compareLines_for_DE
+
+        output:
+
+        set val(comstr),file("${comstr}.deseq.xls") into DE_result
+        file "*" into DE_result_out
+
+        when:
+        !params.without_replicate
+
+        shell:
+        comstr = compare_str
+        file_tag = 'DESeq2: '+comstr
+        file_tag_new = file_tag
+        """
+        ln -s ${baseDir}/bin/PCAplot.R .
+        Rscript ${baseDir}/bin/DESeq2.R ${countMatrix} ${designfile} ./ ${comstr} 
+        """
+
+    }
+/*
+ Differential expression analysis without replicates
+ */
+    process Differential_Expression_analysis_without_RF{
+        tag {file_tag}
+
+        publishDir pattern: "{*.mat,*.xls,*.pdf}",
+                path: { params.outdir + "/DEG_without_Rep" }, mode: 'copy', overwrite: true
+
+        input:
+
+        file abundance_tsv_matrix from couting_file_DE_without_Rep.collect()
+        file gene_gtf
+        val compare_str from compareLines_for_DE_without_REP
+
+        output:
+
+        file "*"
+
+        when:
+        params.without_replicate
+
+        shell:
+        comstr = compare_str
+        file_tag = 'PoissonTest: '+comstr
+        file_tag_new = file_tag
+        comstr_a = comstr.split("_vs_")
+        """
+        java -jar ${datoolPath} -RNAseq -mode poissonDE \
+                                ${comstr_a[0]}*.genes.results  ${comstr_a[0]}.genes.results ${comstr} \
+                                -gtf ${gene_gtf}
         """
 
     }

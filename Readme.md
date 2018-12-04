@@ -6,19 +6,21 @@
 
 ### Dependencies 
 * Softwares 
-    * [fastp]
-    * [STAR] 
-    * [RSEM]
-    * [Qualimap]
+    * [fastp](https://github.com/OpenGene/fastp)
+    * [STAR](https://github.com/alexdobin/STAR)
+    * [RSEM](https://deweylab.github.io/RSEM/)
+    * [Qualimap](http://qualimap.bioinfo.cipf.es/)
     * [DAtools](https://github.com/likelet/DAtools)
-    * [GSEA]
+    * [GSEA](http://software.broadinstitute.org/gsea/index.jsp)
 * R packages 
  
         #bioconductor package
         dep.lib <- c("DESeq2","ReactomePA","CLusterProfile","org.Hs.eg.db","pathview","topGO")
         c.lib<-c("ggplot2","ggpubr","ggrepel","pheatmap","FactoMineR")
 
+* DataSet   
 
+    
 
 ### Input file  
 
@@ -73,3 +75,7 @@ specify which group to compare in your differential expression analysis
 * `--skip_qc`   
 
     set `ture` if you are going to skip qc step 
+    
+* `--without_replicate` 
+    set `ture` if your have no biological replicate.  
+    _note: for no replicate mode, the compare file should be directly specified as `SampleName_vs_SampleName` have just been trimmed _
