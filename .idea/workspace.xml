@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="486564ba-731b-41d1-ac64-f322055a730d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Readme.md" afterPath="$PROJECT_DIR$/Readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/base.config" afterPath="$PROJECT_DIR$/conf/base.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.nf" afterPath="$PROJECT_DIR$/main.nf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nextflow.config" afterPath="$PROJECT_DIR$/nextflow.config" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,17 +19,23 @@
       <file leaf-file-name="main.nf" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.nf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-100">
-              <caret line="394" column="16" lean-forward="false" selection-start-line="394" selection-start-column="16" selection-end-line="394" selection-end-column="16" />
+            <state relative-caret-position="819">
+              <caret line="452" column="5" lean-forward="true" selection-start-line="452" selection-start-column="5" selection-end-line="452" selection-end-column="5" />
               <folding>
-                <element signature="e#7366#8528#0" expanded="false" />
-                <element signature="e#11258#11805#0" expanded="false" />
-                <element signature="e#15937#16671#0" expanded="false" />
-                <element signature="e#16787#17616#0" expanded="false" />
-                <element signature="e#17680#18711#0" expanded="false" />
-                <element signature="e#18776#19137#0" expanded="false" />
-                <element signature="e#20120#20249#0" expanded="false" />
+                <element signature="e#8804#9599#0" expanded="false" />
+                <element signature="e#14011#15043#0" expanded="false" />
+                <element signature="e#17346#17475#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dockerfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -41,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/bin/get_preRankfile_for_GSEA.pl">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="919">
-              <caret line="43" column="36" lean-forward="true" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
+              <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -50,8 +53,8 @@
       <file leaf-file-name="nextflow.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nextflow.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="21" />
+            <state relative-caret-position="984">
+              <caret line="41" column="5" lean-forward="false" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -61,17 +64,7 @@
         <entry file="file://$PROJECT_DIR$/bin/rMATS_prepare.pl">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="525">
-              <caret line="50" column="61" lean-forward="true" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Checkpoint.pl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/Checkpoint.pl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="813">
-              <caret line="34" column="9" lean-forward="true" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+              <caret line="50" column="61" lean-forward="false" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -123,8 +116,8 @@
       <file leaf-file-name="test.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf/test.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="21" column="23" lean-forward="true" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+            <state relative-caret-position="408">
+              <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -134,9 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>designfile</find>
-      <find>single</find>
-      <find>}</find>
       <find>out_folder</find>
       <find>fastq_ext</find>
       <find>params.container</find>
@@ -158,12 +148,15 @@
       <find>mail</find>
       <find>expre</find>
       <find>fastp</find>
-      <find>fastqc_for_multiqc</find>
       <find>skip_multiqc</find>
       <find>ed by STAR in paired-end mode</find>
       <find>qualimap</find>
       <find>counting_file</find>
       <find>compareLines_for_DE</find>
+      <find>designfile</find>
+      <find>couting_file_DE_without_Rep</find>
+      <find>fastqc_for_multiqc</find>
+      <find>quali</find>
     </findStrings>
     <replaceStrings>
       <replace>star_index</replace>
@@ -195,12 +188,12 @@
         <option value="$PROJECT_DIR$/compare.txt" />
         <option value="$PROJECT_DIR$/conf/C2.config" />
         <option value="$PROJECT_DIR$/bin/get_preRankfile_for_GSEA.pl" />
-        <option value="$PROJECT_DIR$/conf/test.config" />
         <option value="$PROJECT_DIR$/conf/C1.config" />
         <option value="$PROJECT_DIR$/conf/base.config" />
         <option value="$PROJECT_DIR$/nextflow.config" />
         <option value="$PROJECT_DIR$/Readme.md" />
         <option value="$PROJECT_DIR$/main.nf" />
+        <option value="$PROJECT_DIR$/conf/test.config" />
       </list>
     </option>
   </component>
@@ -666,7 +659,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543851943250</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add analysis for non-replicated differential expression analysis">
+      <created>1543912191520</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1543912191520</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -712,21 +712,14 @@
     <MESSAGE value="add qualimap" />
     <MESSAGE value="add GSEA analysis at single gene level" />
     <MESSAGE value="Working data model" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working data model" />
+    <MESSAGE value="add analysis for non-replicated differential expression analysis" />
+    <option name="LAST_COMMIT_MESSAGE" value="add analysis for non-replicated differential expression analysis" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/nextflow.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/RNAseqPipe.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1003,15 +996,7 @@
     <entry file="file://$PROJECT_DIR$/bin/rMATS_prepare.pl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
-          <caret line="50" column="61" lean-forward="true" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/test.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="21" column="23" lean-forward="true" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+          <caret line="50" column="61" lean-forward="false" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="61" />
           <folding />
         </state>
       </provider>
@@ -1019,7 +1004,7 @@
     <entry file="file://$PROJECT_DIR$/bin/get_preRankfile_for_GSEA.pl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="919">
-          <caret line="43" column="36" lean-forward="true" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
+          <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -1040,22 +1025,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/base.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="744">
-          <caret line="40" column="28" lean-forward="false" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nextflow.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Readme.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1067,18 +1036,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nextflow.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="984">
+          <caret line="41" column="5" lean-forward="false" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/base.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="744">
+          <caret line="40" column="28" lean-forward="false" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/test.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.nf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-100">
-          <caret line="394" column="16" lean-forward="false" selection-start-line="394" selection-start-column="16" selection-end-line="394" selection-end-column="16" />
+        <state relative-caret-position="819">
+          <caret line="452" column="5" lean-forward="true" selection-start-line="452" selection-start-column="5" selection-end-line="452" selection-end-column="5" />
           <folding>
-            <element signature="e#7366#8528#0" expanded="false" />
-            <element signature="e#11258#11805#0" expanded="false" />
-            <element signature="e#15937#16671#0" expanded="false" />
-            <element signature="e#16787#17616#0" expanded="false" />
-            <element signature="e#17680#18711#0" expanded="false" />
-            <element signature="e#18776#19137#0" expanded="false" />
-            <element signature="e#20120#20249#0" expanded="false" />
+            <element signature="e#8804#9599#0" expanded="false" />
+            <element signature="e#14011#15043#0" expanded="false" />
+            <element signature="e#17346#17475#0" expanded="false" />
           </folding>
         </state>
       </provider>

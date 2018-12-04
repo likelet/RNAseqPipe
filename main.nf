@@ -77,9 +77,11 @@ if (params.help) {
             '\n' +
             print_yellow('    Options:                         General options for run this pipeline\n') +
             print_cyan('      --design <file>               ') + print_green('A flat file stored the experimental design information ( required when perform differential expression analysis)\n') +
-            print_cyan('      --compare <file>               ') + print_green('A flat file stored comparison information ( required when perform differential expression analysis, e.g )\n') +
+            print_cyan('      --comparefile <file>               ') + print_green('A flat file stored comparison information ( required when perform differential expression analysis, e.g )\n') +
             print_cyan('      --singleEnd                   ') + print_green('Reads type, True for single ended \n') +
             print_cyan('      --unstrand                    ') + print_green('RNA library construction strategy, specified for \'unstranded\' library \n') +
+            print_cyan('      --without_replicate           ') + print_green('Specified when no replicates design involved, must provide  \'compare.txt\' file at the same time\n') +
+
             '\n' +
             print_yellow('    References:                      If not specified in the configuration file or you wish to overwrite any of the references.\n') +
             print_cyan('      --fasta                       ') + print_green('Path to Fasta reference(required)\n') +
@@ -178,7 +180,7 @@ if(params.skip_qc){
         set val(samplename), file(pair) from reads_for_fastqc
 
         output:
-        file "${file_tag_new}.genes.results" into counting_file
+        file "${file_tag_new}.genes.results" into counting_file,couting_file_DE_without_Rep
         set val(file_tag_new), file ("${file_tag_new}.STAR.genome.bam") into bamfile_for_qualimap
 
         shell:
@@ -200,6 +202,11 @@ if(params.skip_qc){
 
     }
 }else{
+
+
+/*
+ Step : Quality control
+ */
     process Run_FastP {
 
         tag { fastq_tag }
@@ -234,7 +241,6 @@ if(params.skip_qc){
 /*
  Step : Quantification  by star and RSEM
  */
-
     process RSEM_quantification_without_fastp {
 
         tag { file_tag }
@@ -301,9 +307,9 @@ process run_qualimap{
     file_tag = samplename
     file_tag_new = file_tag
     samplename = file_tag
-
+    parsed_mem = task.memory.getGiga()+"G"
     """
-     qualimap rnaseq -bam ${bam_for_qualimap} -gtf ${gene_gtf} -s -outfile ${file_tag_new}_qualimap.pdf --java-mem-size=${task.memory}
+     qualimap rnaseq -bam ${bam_for_qualimap} -gtf ${gene_gtf} -s -outfile ${file_tag_new}_qualimap.pdf --java-mem-size=${parsed_mem}
     """
 
 }
@@ -342,9 +348,10 @@ process collapse_matrix{
 
 }
 /*
-  Differential expression analysis
+  Differential expression analysis && GSEA
  */
-if( params.comparefile ){
+if( params.designfile && params.comparefile ){
+// DE
     process Differential_Expression_analysis{
         tag {file_tag}
 
@@ -362,9 +369,6 @@ if( params.comparefile ){
         set val(comstr),file("${comstr}.deseq.xls") into DE_result
         file "*" into DE_result_out
 
-        when:
-        (params.designfile==true) && (params.without_replicate==false)
-
         shell:
         comstr = compare_str
         file_tag = 'DESeq2: '+comstr
@@ -375,44 +379,10 @@ if( params.comparefile ){
         """
 
     }
-/*
- Differential expression analysis without replicates
- */
-    process Differential_Expression_analysis_without_RF{
-        tag {file_tag}
 
-        publishDir pattern: "{*.mat,*.xls,*.pdf}",
-                path: { params.outdir + "/DEG_without_Rep" }, mode: 'copy', overwrite: true
-
-        input:
-
-        file abundance_tsv_matrix from couting_file_DE_without_Rep.collect()
-        file gene_gtf
-        val compare_str from compareLines_for_DE_without_REP
-
-        output:
-
-        file "*"
-
-        when:
-        params.without_replicate==true
-
-        shell:
-        comstr = compare_str
-        file_tag = 'PoissonTest: '+comstr
-        file_tag_new = file_tag
-        comstr_a = comstr.split("_vs_")
-        """
-        java -jar ${datoolPath} -RNAseq -mode poissonDE \
-                                ${comstr_a[0]}*.genes.results  ${comstr_a[0]}.genes.results ${comstr} \
-                                -gtf ${gene_gtf}
-        """
-
-    }
 /*
  Gene Set Enrichment Analysis
  */
-
     process GSEA_analysis{
         tag { file_tag }
 
@@ -428,8 +398,6 @@ if( params.comparefile ){
         output:
         file "${compare_str}*" into gsea_out
 
-        when:
-        (params.designfile==true) && (params.without_replicate==false)
 
         shell:
         file_tag = compare_str
@@ -451,44 +419,14 @@ if( params.comparefile ){
 
 }
 
-if(params.designfile && params.comparefile ){
-    process Differential_Expression_analysis{
-        tag {file_tag}
-
-        publishDir pattern: "{*.mat,*.xls,*.pdf}",
-                path: { params.outdir + "/DEG" }, mode: 'copy', overwrite: true
-
-        input:
-
-        file countMatrix from count_matrix_forDE
-        file designfile
-        val compare_str from compareLines_for_DE
-
-        output:
-
-        set val(comstr),file("${comstr}.deseq.xls") into DE_result
-        file "*" into DE_result_out
-
-        when:
-        !params.without_replicate
-
-        shell:
-        comstr = compare_str
-        file_tag = 'DESeq2: '+comstr
-        file_tag_new = file_tag
-        """
-        ln -s ${baseDir}/bin/PCAplot.R .
-        Rscript ${baseDir}/bin/DESeq2.R ${countMatrix} ${designfile} ./ ${comstr} 
-        """
-
-    }
 /*
  Differential expression analysis without replicates
  */
-    process Differential_Expression_analysis_without_RF{
-        tag {file_tag}
+if(params.comparefile && params.without_replicate) {
+    process Differential_Expression_analysis_without_RF {
+        tag { file_tag }
 
-        publishDir pattern: "{*.mat,*.xls,*.pdf}",
+        publishDir pattern: "{*}",
                 path: { params.outdir + "/DEG_without_Rep" }, mode: 'copy', overwrite: true
 
         input:
@@ -501,59 +439,20 @@ if(params.designfile && params.comparefile ){
 
         file "*"
 
-        when:
-        params.without_replicate
-
         shell:
         comstr = compare_str
-        file_tag = 'PoissonTest: '+comstr
+        file_tag = 'PoissonTest: ' + comstr
         file_tag_new = file_tag
         comstr_a = comstr.split("_vs_")
         """
         java -jar ${datoolPath} -RNAseq -mode poissonDE \
-                                ${comstr_a[0]}*.genes.results  ${comstr_a[0]}.genes.results ${comstr} \
+                                ${comstr_a[0]}.genes.results  ${comstr_a[1]}.genes.results ${comstr} \
                                 -gtf ${gene_gtf}
         """
 
     }
-/*
- Gene Set Enrichment Analysis
- */
-
-    process GSEA_analysis{
-        tag { file_tag }
-
-        publishDir pattern: "*",
-                path: { params.outdir + "/GSEA_analysis" }, mode: 'move', overwrite: true
-
-        input:
-        file fpkm_matrix from fpkm_matrix_for_GSEA
-        file designfile
-        val compare_str from compareLines_for_GSEA
-
-
-        output:
-        file "${compare_str}*" into gsea_out
-
-        shell:
-        file_tag = compare_str
-        file_tag_new = file_tag
-        samplename = file_tag
-
-        """
-        # generate GSEA rnk file 
-         perl ${baseDir}/bin/get_preRankfile_for_GSEA.pl ${fpkm_matrix} ${designfile} ${compare_str} ${compare_str}.rnk
-         java -cp ${gseapath} xtools.gsea.GseaPreranked \
-          -gmx  ${gsea_pathway}\
-          -norm meandiv -nperm 1000 \
-          -rnk  ${compare_str}.rnk \
-          -scoring_scheme weighted -rpt_label ${compare_str} \
-          -create_svgs true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500 -set_min 15 -zip_report false \
-          -out ./ -gui false
-        """
-    }
-
 }
+
 
 /*
 MultiQC for data quality report
@@ -563,7 +462,7 @@ process Run_MultiQC {
     publishDir "${params.outdir}/MultiQC", mode: 'copy'
 
     input:
-    file ('*') from fastqc_for_multiqc.collect()
+
     file ('*') from qualimap_result_for_multiqc.collect()
 
     output:
