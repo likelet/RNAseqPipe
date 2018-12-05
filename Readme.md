@@ -23,7 +23,7 @@ Choose between workflows by using `--without_replicate` or not(default) .
 | Align Reads                                  | STAR             | STAR                  |
 | Alignment QC                                 | Qualimap         | Qualimap              |
 | Reads counting                               | RSEM             | RSEM                  |
-| Matrix collapses                              | DAtools          | DAtools               |
+| Matrix collapses                             | DAtools          | DAtools               |
 | Differential expression                      | DESeq2           | Poisson Test(DAtools) |
 | Gene Set enrichment Analysis                 | GSEA             | -                     |
 | Summary Report                               | MultiQC          | MultiQC               |

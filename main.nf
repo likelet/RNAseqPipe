@@ -168,7 +168,7 @@ Channel.fromFilePairs(reads, size: params.singleEnd ? 1 : 2)
 
 if(params.skip_qc){
     println print_yellow("Skip reads qc process, directly do mapping ")
-    process RSEM_quantification  {
+    process RSEM_quantification_without_fastp  {
 
         tag { file_tag }
         label 'para'
@@ -241,7 +241,7 @@ if(params.skip_qc){
 /*
  Step : Quantification  by star and RSEM
  */
-    process RSEM_quantification_without_fastp {
+    process RSEM_quantification {
 
         tag { file_tag }
         label 'para'

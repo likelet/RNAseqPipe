@@ -30,13 +30,17 @@ suppressMessages(library("FactoMineR"))
 suppressMessages(library("ggpubr"))
 
 source("PCAplot.R")
-
+args=c("forDE.count.matrix","design.file","./","DN_vs_DH")
 countData <- read.table(args[1], header = TRUE, row.names = 1,check.names=FALSE)
 countData <- round(countData)
 colData <- read.table(args[2], header = TRUE, row.names = 1)
 outdir <- args[3]
+compare.str = args[4]
+comb = strsplit(as.character(compare.str), "_vs_")[[1]]
+keep.sample.names=row.names(colData)[which(colData$Type %in% comb)]
 # keep the order consistency
-countData<-countData[,row.names(colData)]
+countData<-countData[,keep.sample.names]
+colData<-subset(colData,row.names(colData) %in% keep.sample.names)
 fc = 2
 lfc = log2(fc)
 pval = 0.05
@@ -97,11 +101,8 @@ countData <- countData[keep,]
 dds <- DESeqDataSetFromMatrix(countData = countData, colData = colData, design = ~ Type)
 dds <- DESeq(dds)
 norm_counts = counts(dds, normalized=TRUE)
-write.table(norm_counts, file = paste(outdir, "All_sample_normalized_count.deseq.mat", sep = "/"), 
+    write.table(norm_counts, file = paste(outdir,"All_sample_normalized_count.deseq.mat", sep = "/"),
             sep = "\t", quote = FALSE, row.names = T, col.names = NA)
-
-compare.str = args[4]
-    comb = strsplit(as.character(compare.str), "_vs_")[[1]]
     res <- results(dds, contrast=c("Type",comb[1],comb[2]))
     res <- as.data.frame(res)
     write.table(res, file = paste(outdir,"/", comb[1], "_vs_", comb[2], ".deseq.xls",sep = ""),
