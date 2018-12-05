@@ -1,7 +1,32 @@
 
+# SYSUCC-RNAseqPipe
+
 ### Quick start  for reproductive analysis 
 
-    nextflow -c nextflow.config run main.nf -resume -with-trace  -with-timeline timeline.html
+    nextflow run main.nf -resume -with-trace  -with-timeline timeline.html
+
+### Documentation
+The SYSUCC-RNAseqPipe pipeline comes with documentation about the pipeline, found in the `docs/` directory:
+
+1. [Installation and configuration](docs/installation.md)
+2. [Running the pipeline](docs/usage.md)
+3. [Output and how to interpret the results](docs/output.md)
+
+### Pipeline Steps
+
+The pipeline allows you to choose between running either replicates or without replicates.
+Choose between workflows by using `--without_replicate` or not(default) .
+
+| Step                                         | With replicates  | without_replicate     |
+|----------------------------------------------|------------------|-----------------------|
+| Raw data QC                                  | Fastp            | Fastp                 |
+| Align Reads                                  | STAR             | STAR                  |
+| Alignment QC                                 | Qualimap         | Qualimap              |
+| Reads counting                               | RSEM             | RSEM                  |
+| Matrix collapses                              | DAtools          | DAtools               |
+| Differential expression                      | DESeq2           | Poisson Test(DAtools) |
+| Gene Set enrichment Analysis                 | GSEA             | -                     |
+| Summary Report                               | MultiQC          | MultiQC               |
 
 
 ### Dependencies 
@@ -11,16 +36,7 @@
     * [RSEM](https://deweylab.github.io/RSEM/)
     * [Qualimap](http://qualimap.bioinfo.cipf.es/)
     * [DAtools](https://github.com/likelet/DAtools)
-    * [GSEA](http://software.broadinstitute.org/gsea/index.jsp)
-* R packages 
- 
-        #bioconductor package
-        dep.lib <- c("DESeq2","ReactomePA","CLusterProfile","org.Hs.eg.db","pathview","topGO")
-        c.lib<-c("ggplot2","ggpubr","ggrepel","pheatmap","FactoMineR")
-
-* DataSet   
-
-    
+    * [GSEA](http://software.broadinstitute.org/gsea/index.jsp)    
 
 ### Input file  
 
@@ -78,4 +94,11 @@ specify which group to compare in your differential expression analysis
     
 * `--without_replicate` 
     set `ture` if your have no biological replicate.  
-    _note: for no replicate mode, the compare file should be directly specified as `SampleName_vs_SampleName` have just been trimmed _
+    _note: for no replicate mode, the compare file should be directly specified as `SampleName_vs_SampleName` have just been trimmed _  
+    
+# Credits 
+* Main author:
+  * Qi Zhao ([@qi_likelet](https://github.com/likelet/))
+* Contributors:
+  * Xiaolong Zhang 
+  * Kaiyu 
