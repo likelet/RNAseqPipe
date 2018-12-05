@@ -3,12 +3,12 @@
 
 ### Quick start  for reproductive analysis 
 
-    nextflow run main.nf -resume -with-trace  -with-timeline timeline.html
+    nextflow run RNAseqPipe/main.nf -profile c2 --read "*_{1,2}.fq.gz" --designfile "design.file" --comparefile "compare.txt"
 
 ### Documentation
 The SYSUCC-RNAseqPipe pipeline comes with documentation about the pipeline, found in the `docs/` directory:
 
-1. [Installation and configuration](docs/installation.md)
+1. [Installation and configuration](docs/Installation.md)
 2. [Running the pipeline](docs/usage.md)
 3. [Output and how to interpret the results](docs/output.md)
 
@@ -36,7 +36,9 @@ Choose between workflows by using `--without_replicate` or not(default) .
     * [RSEM](https://deweylab.github.io/RSEM/)
     * [Qualimap](http://qualimap.bioinfo.cipf.es/)
     * [DAtools](https://github.com/likelet/DAtools)
-    * [GSEA](http://software.broadinstitute.org/gsea/index.jsp)    
+    * [MultiQC](https://github.com/ewels/MultiQC)
+    * [GSEA](http://software.broadinstitute.org/gsea/index.jsp)  
+    * Several R packages for downstream analysis.
 
 ### Input file  
 
@@ -66,7 +68,7 @@ specify which group to compare in your differential expression analysis
 
 * `--reads`  
     
-    suffix of your raw reads file. 
+    suffix of your raw reads file. For example, `*_{1,2}.fq.gz` for paired end reads file `sampleA_1.fq.gz` and `sampleA_2.fq.gz `  
     
 * `--designfile`  
     
@@ -92,9 +94,10 @@ specify which group to compare in your differential expression analysis
 
     set `ture` if you are going to skip qc step 
     
-* `--without_replicate` 
-    set `ture` if your have no biological replicate.  
-    _note: for no replicate mode, the compare file should be directly specified as `SampleName_vs_SampleName` have just been trimmed _  
+* `--without_replicate`   
+
+    set `ture` if your have no biological replicate.       
+    *note: for no replicate mode, the compare file should be directly specified as `SampleName_vs_SampleName` have just been trimmed by `read` suffix string *  
     
 # Credits 
 * Main author:
