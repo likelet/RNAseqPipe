@@ -30,7 +30,7 @@ suppressMessages(library("FactoMineR"))
 suppressMessages(library("ggpubr"))
 
 source("PCAplot.R")
-args=c("forDE.count.matrix","design.file","./","DN_vs_DH")
+#args=c("forDE.count.matrix","design.file","./","DN_vs_DH")
 countData <- read.table(args[1], header = TRUE, row.names = 1,check.names=FALSE)
 countData <- round(countData)
 colData <- read.table(args[2], header = TRUE, row.names = 1)

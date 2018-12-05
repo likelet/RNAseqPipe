@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="486564ba-731b-41d1-ac64-f322055a730d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Readme.md" afterPath="$PROJECT_DIR$/Readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/DESeq2.R" afterPath="$PROJECT_DIR$/bin/DESeq2.R" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,7 +58,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Readme.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Readme.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Readme.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -104,13 +104,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DESeq2.R" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DESeq2.R" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bin/DESeq2.R">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1053">
-              <caret line="135" column="0" lean-forward="true" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+            <state relative-caret-position="768">
+              <caret line="32" column="1" lean-forward="false" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
               <folding>
-                <element signature="e#2029#4142#0" expanded="false" />
+                <element signature="e#2030#4143#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -196,8 +196,8 @@
         <option value="$PROJECT_DIR$/docs/Installation.md" />
         <option value="$PROJECT_DIR$/main.nf" />
         <option value="$PROJECT_DIR$/conf/base.config" />
-        <option value="$PROJECT_DIR$/bin/DESeq2.R" />
         <option value="$PROJECT_DIR$/Readme.md" />
+        <option value="$PROJECT_DIR$/bin/DESeq2.R" />
       </list>
     </option>
   </component>
@@ -698,7 +698,14 @@
       <option name="project" value="LOCAL" />
       <updated>1544000270465</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="update readme and PCA analysis in single comparison">
+      <created>1544001694677</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1544001694677</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1082,16 +1089,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/DESeq2.R">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1053">
-          <caret line="135" column="0" lean-forward="true" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
-          <folding>
-            <element signature="e#2029#4142#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Readme.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1100,6 +1097,16 @@
             <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/DESeq2.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="32" column="1" lean-forward="false" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
+          <folding>
+            <element signature="e#2030#4143#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
