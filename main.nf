@@ -50,7 +50,7 @@ def print_white = {  str -> ANSI_WHITE + str + ANSI_RESET }
 
 //Help information
 // Nextflow  version
-version="v0.0.1"
+version="0.0.1"
 //=======================================================================================
 // Nextflow Version check
 if( !nextflow.version.matches('0.30+') ) {
@@ -64,7 +64,7 @@ if (params.help) {
     log.info ''
     log.info print_purple('------------------------------------------------------------------------')
     log.info "RNAseqPipe_SYSUCC:  v$version"
-     log.info print_purple('------------------------------------------------------------------------')
+    log.info print_purple('------------------------------------------------------------------------')
     log.info ''
     log.info print_yellow('Usage: ')
     log.info print_yellow('    The typical command for running the pipeline is as follows (we do not recommend users passing configuration parameters through command line, please modify the config.file instead):\n') +
@@ -76,7 +76,7 @@ if (params.help) {
             print_cyan('      --outdir <path>               ') + print_green('The output directory where the results will be saved(optional), current path is default\n') +
             '\n' +
             print_yellow('    Options:                         General options for run this pipeline\n') +
-            print_cyan('      --design <file>               ') + print_green('A flat file stored the experimental design information ( required when perform differential expression analysis)\n') +
+            print_cyan('      --designfile <file>               ') + print_green('A flat file stored the experimental design information ( required when perform differential expression analysis)\n') +
             print_cyan('      --comparefile <file>               ') + print_green('A flat file stored comparison information ( required when perform differential expression analysis, e.g )\n') +
             print_cyan('      --singleEnd                   ') + print_green('Reads type, True for single ended \n') +
             print_cyan('      --unstrand                    ') + print_green('RNA library construction strategy, specified for \'unstranded\' library \n') +
@@ -492,8 +492,7 @@ workflow.onComplete {
         recipient = params.mail
         def subject = 'My RNAseq-SYSUCC execution'
 
-        ['mail', '-s', subject, recipient].execute() <<
-                """
+       def  msg = """\
             RNAseq-SYSUCC execution summary
             ---------------------------
             Your command line: ${workflow.commandLine}
@@ -504,10 +503,10 @@ workflow.onComplete {
             exit status : ${workflow.exitStatus}
             Error report: ${workflow.errorReport ?: '-'}
         
-            """
+            """.stripIndent()
+
+        sendMail(to: recipient, subject: subject, body: msg)
     }
-
-
 }
 workflow.onError {
 
