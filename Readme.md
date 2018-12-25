@@ -103,5 +103,6 @@ specify which group to compare in your differential expression analysis
 * Main author:
   * Qi Zhao ([@qi_likelet](https://github.com/likelet/))
 * Contributors:
-  * Xiaolong Zhang 
+  * Xiaolong Zhang
+  * Rucheng Diao
   * Kaiyu 
