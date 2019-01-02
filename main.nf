@@ -81,6 +81,7 @@ if (params.help) {
             print_cyan('      --singleEnd                   ') + print_green('Reads type, True for single ended \n') +
             print_cyan('      --unstrand                    ') + print_green('RNA library construction strategy, specified for \'unstranded\' library \n') +
             print_cyan('      --without_replicate           ') + print_green('Specified when no replicates design involved, must provide  \'compare.txt\' file at the same time\n') +
+            print_cyan('      --IDEA                        ') + print_green('Run pre processing step for IDEA(http://idea.renlab.org) n') +
 
             '\n' +
             print_yellow('    References:                      If not specified in the configuration file or you wish to overwrite any of the references.\n') +
