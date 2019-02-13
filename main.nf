@@ -4,7 +4,7 @@
  * RNAseqPipe was implemented by Dr. Qi Zhao from Sun Yat-sen University Cancer Center.
  *
  *
- *   LncPipe is free software: you can redistribute it and/or modify
+ *   RNAseqPipe is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
@@ -28,25 +28,6 @@
 // - DAtools
 //pre-defined functions for render command
 //=======================================================================================
-ANSI_RESET = "\u001B[0m";
-ANSI_BLACK = "\u001B[30m";
-ANSI_RED = "\u001B[31m";
-ANSI_GREEN = "\u001B[32m";
-ANSI_YELLOW = "\u001B[33m";
-ANSI_BLUE = "\u001B[34m";
-ANSI_PURPLE = "\u001B[35m";
-ANSI_CYAN = "\u001B[36m";
-ANSI_WHITE = "\u001B[37m";
-
-
-def print_red = {  str -> ANSI_RED + str + ANSI_RESET }
-def print_black = {  str -> ANSI_BLACK + str + ANSI_RESET }
-def print_green = {  str -> ANSI_GREEN + str + ANSI_RESET }
-def print_yellow = {  str -> ANSI_YELLOW + str + ANSI_RESET }
-def print_blue = {  str -> ANSI_BLUE + str + ANSI_RESET }
-def print_cyan = {  str -> ANSI_CYAN + str + ANSI_RESET }
-def print_purple = {  str -> ANSI_PURPLE + str + ANSI_RESET }
-def print_white = {  str -> ANSI_WHITE + str + ANSI_RESET }
 
 //Help information
 // Nextflow  version
@@ -54,49 +35,14 @@ version="0.0.1"
 //=======================================================================================
 // Nextflow Version check
 if( !nextflow.version.matches('0.30+') ) {
-    println print_yellow("This workflow requires Nextflow version 0.26 or greater -- You are running version ")+ print_red(nextflow.version)
+    println LikelikeUtils.print_yellow("This workflow requires Nextflow version 0.26 or greater -- You are running version ")+ LikelikeUtils.print_red(nextflow.version)
     exit 1
 }
 
 
 params.help = null
 if (params.help) {
-    log.info ''
-    log.info print_purple('------------------------------------------------------------------------')
-    log.info "RNAseqPipe_SYSUCC:  v$version"
-    log.info print_purple('------------------------------------------------------------------------')
-    log.info ''
-    log.info print_yellow('Usage: ')
-    log.info print_yellow('    The typical command for running the pipeline is as follows (we do not recommend users passing configuration parameters through command line, please modify the config.file instead):\n') +
-            print_purple('       Nextflow run RNAseqPipe/main.nf \n') +
-
-            print_yellow('    General arguments:             Input and output setting\n') +
-            print_cyan('      --inputdir <path>            ') + print_green('Path to input data(optional), current path default\n') +
-            print_cyan('      --reads <*_fq.gz>            ') + print_green('Filename pattern for pairing raw reads, e.g: *_{1,2}.fastq.gz for paired reads\n') +
-            print_cyan('      --outdir <path>               ') + print_green('The output directory where the results will be saved(optional), current path is default\n') +
-            '\n' +
-            print_yellow('    Options:                         General options for run this pipeline\n') +
-            print_cyan('      --designfile <file>               ') + print_green('A flat file stored the experimental design information ( required when perform differential expression analysis)\n') +
-            print_cyan('      --comparefile <file>               ') + print_green('A flat file stored comparison information ( required when perform differential expression analysis, e.g )\n') +
-            print_cyan('      --singleEnd                   ') + print_green('Reads type, True for single ended \n') +
-            print_cyan('      --unstrand                    ') + print_green('RNA library construction strategy, specified for \'unstranded\' library \n') +
-            print_cyan('      --without_replicate           ') + print_green('Specified when no replicates design involved, must provide  \'compare.txt\' file at the same time\n') +
-            print_cyan('      --IDEA                        ') + print_green('Run pre processing step for IDEA(http://idea.renlab.org) n') +
-
-            '\n' +
-            print_yellow('    References:                      If not specified in the configuration file or you wish to overwrite any of the references.\n') +
-            print_cyan('      --fasta                       ') + print_green('Path to Fasta reference(required)\n') +
-            print_cyan('      --gene_gtf                    ') + print_green('An annotation file from GENCODE database in GTF format (required)\n') +
-           '\n' +
-            print_yellow('    Other options:                   Specify the email and \n') +
-             print_cyan('      --mail                         ') + print_green('email info for reporting status of your LncPipe execution  \n') +
-
-
-
-            log.info '------------------------------------------------------------------------'
-    log.info print_yellow('Contact information: zhaoqi@sysucc.org.cn')
-    log.info print_yellow('Copyright (c) 2013-2018, Sun Yat-sen University Cancer Center.')
-    log.info '------------------------------------------------------------------------'
+    this.helpMessage()
     exit 0
 }
 
@@ -111,8 +57,8 @@ mail=params.email
 // read file
 datoolPath = file(params.dapath)
 if( !datoolPath.exists() ) exit 1, print_red("DAtools  not found: ${params.dapath}")
-gene_gtf = file(params.gtf)
-if( !gene_gtf.exists() ) exit 1, print_red("GTF file not found: ${params.gtf}")
+gene_gtf = file(params.gene_gtf)
+if( !gene_gtf.exists() ) exit 1, print_red("GTF file not found: ${params.gene_gtf}")
 // star-rsem index
 star_index =  params.star_index
 gseapath = params.gseapath
@@ -136,23 +82,9 @@ if(params.comparefile){
 compareLines.into{compareLines_for_DE; compareLines_for_GSEA;compareLines_for_DE_without_REP}
 
 
-
-// Check parameters
-
 //Checking parameters
-log.info print_purple("You are running RNAseqPipe-SYSUCC with the following parameters:")
-log.info print_purple("Checking parameters ...")
-log.info print_yellow("=====================================")
-log.info print_yellow("Fastq file extension:           ") + print_green(params.read)
-log.info print_yellow("Single end :                    ") + print_green(params.singleEnd)
-log.info print_yellow("Strand specific condition:      ") + print_green(params.strand)
-log.info print_yellow("Output folder:                  ") + print_green(params.outdir)
-log.info print_yellow("STAR index path:                ") + print_green(params.star_index)
-log.info print_yellow("GTF path:                       ") + print_green(params.gtf)
-log.info print_yellow("Design file  path:              ") + print_green(params.designfile)
-log.info print_yellow("Compare file path:              ") + print_green(params.comparefile)
-log.info print_yellow("=====================================")
-log.info "\n"
+minimalInformationMessage()
+
 
 /*
  Step : Fastqc by fastp
@@ -175,7 +107,7 @@ if(params.skip_qc){
         label 'para'
 
         publishDir pattern: "*.bam",
-                path: { params.outdir + "/Star_alignment" }, mode: 'move', overwrite: true
+                path: { params.outdir + "/Star_alignment" }, mode: 'link', overwrite: true
 
         input:
         set val(samplename), file(pair) from reads_for_fastqc
@@ -190,16 +122,61 @@ if(params.skip_qc){
         file_tag_new = file_tag
 
 
-        println print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end mode")
-        """
-             rsem-calculate-expression -p ${task.cpus} \
-                --no-bam-output --star \
-                -star-gzipped-read-file \
-                --star-output-genome-bam \
-                --estimate-rspd --time \
-                --paired-end  ${pair[0]} ${pair[1]} ${star_index} ${file_tag_new}
+        if(params.singleEnd){
+            println print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end  mode")
+             if(params.strand){
+                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
+                """
+                        rsem-calculate-expression -p ${task.cpus} \
+                            --no-bam-output --star \
+                            -star-gzipped-read-file \
+                            --star-output-genome-bam \
+                            --estimate-rspd --time \
+                            --strand-specific \
+                            ${pair[0]} ${star_index} ${file_tag_new}
+                            
+                """
+            }else{
+                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
+                """
+                    rsem-calculate-expression -p ${task.cpus} \
+                        --no-bam-output --star \
+                        -star-gzipped-read-file \
+                        --star-output-genome-bam \
+                        --estimate-rspd --time \
+                        ${pair[0]} ${star_index} ${file_tag_new}
+                        
+            """
+            }
+        } else{
+            println print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end  mode")
                 
-        """
+            if(params.strand){
+                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
+                """
+                        rsem-calculate-expression -p ${task.cpus} \
+                            --no-bam-output --star \
+                            -star-gzipped-read-file \
+                            --star-output-genome-bam \
+                            --estimate-rspd --time \
+                            --strand-specific \
+                            --paired-end  ${pair[0]} ${pair[1]} ${star_index} ${file_tag_new}
+                            
+                """
+            }else{
+                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
+                """
+                    rsem-calculate-expression -p ${task.cpus} \
+                        --no-bam-output --star \
+                        -star-gzipped-read-file \
+                        --star-output-genome-bam \
+                        --estimate-rspd --time \
+                        --paired-end  ${pair[0]} ${pair[1]} ${star_index} ${file_tag_new}
+                        
+            """
+            }
+        }  
+        
 
     }
 }else{
@@ -262,30 +239,60 @@ if(params.skip_qc){
         file_tag = samplename
         file_tag_new = file_tag
 
-    if(params.strand){
-        println print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end mode")
-        """
-                 rsem-calculate-expression -p ${task.cpus} \
-                    --no-bam-output --star \
-                    -star-gzipped-read-file \
-                    --star-output-genome-bam \
-                    --estimate-rspd --time \
-                    --strand-specific \
-                    --paired-end  ${pair[0]} ${pair[1]} ${star_index} ${file_tag_new}
-                    
-        """
-        }else{
-        println print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end mode")
-        """
-                     rsem-calculate-expression -p ${task.cpus} \
+    if(params.singleEnd){
+            println print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end  mode")
+             if(params.strand){
+                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
+                """
+                        rsem-calculate-expression -p ${task.cpus} \
+                            --no-bam-output --star \
+                            -star-gzipped-read-file \
+                            --star-output-genome-bam \
+                            --estimate-rspd --time \
+                            --strand-specific \
+                            ${pair[0]} ${star_index} ${file_tag_new}
+                            
+                """
+            }else{
+                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
+                """
+                    rsem-calculate-expression -p ${task.cpus} \
+                        --no-bam-output --star \
+                        -star-gzipped-read-file \
+                        --star-output-genome-bam \
+                        --estimate-rspd --time \
+                        ${pair[0]} ${star_index} ${file_tag_new}
+                        
+            """
+            }
+        } else{
+            println print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end  mode")
+                
+            if(params.strand){
+                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
+                """
+                        rsem-calculate-expression -p ${task.cpus} \
+                            --no-bam-output --star \
+                            -star-gzipped-read-file \
+                            --star-output-genome-bam \
+                            --estimate-rspd --time \
+                            --strand-specific \
+                            --paired-end  ${pair[0]} ${pair[1]} ${star_index} ${file_tag_new}
+                            
+                """
+            }else{
+                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
+                """
+                    rsem-calculate-expression -p ${task.cpus} \
                         --no-bam-output --star \
                         -star-gzipped-read-file \
                         --star-output-genome-bam \
                         --estimate-rspd --time \
                         --paired-end  ${pair[0]} ${pair[1]} ${star_index} ${file_tag_new}
                         
-        """
-        }
+            """
+            }
+        }  
 
 
     }
@@ -330,7 +337,7 @@ process collapse_matrix{
     file gene_gtf
 
     output:
-    file "${samplename}.count.matrix" into count_matrix
+    file "${samplename}.count.matrix" into count_matrix, count_for_IDEA
     file "forDE.count.matrix" into count_matrix_forDE
     file "${samplename}.tpm.matrix" into tpm_matrix_forDE
     file "${samplename}.fpkm.matrix" into fpkm_matrix_for_GSEA
@@ -346,6 +353,29 @@ process collapse_matrix{
 
 
     """
+
+}
+/*
+ generate IDEA input file 
+*/
+
+process IDEA_Input_generate{
+publishDir pattern: "*.csv",
+            path: { params.outdir + "/IDEA_Input" }, mode: 'move', overwrite: true
+
+    input:
+    file count_matrix from count_for_IDEA
+    file designfile
+
+    output:
+    file "*"
+
+    shell:
+    
+    '''
+     sed 's/\t/,/g' !{count_matrix} > count.matrix.csv
+     sed 's/\t/,/g' !{designfile} > design.csv
+    '''
 
 }
 /*
@@ -399,6 +429,8 @@ if( params.designfile && params.comparefile ){
         output:
         file "${compare_str}*" into gsea_out
 
+        when:
+        !params.skip_gsea
 
         shell:
         file_tag = compare_str
@@ -485,9 +517,9 @@ process Run_MultiQC {
 Working completed message
  */
 workflow.onComplete {
-    log.info print_green("=================================================")
-    log.info print_green("Cheers! RNAseq Pipeline from SYSUCC run Complete!")
-    log.info print_green("=================================================")
+    println LikeletUtils.print_green("=================================================")
+    println LikeletUtils.print_green("Cheers! RNAseq Pipeline from SYSUCC run Complete!")
+    println LikeletUtils.print_green("=================================================")
     //email information
     if (params.mail) {
         recipient = params.mail
@@ -511,5 +543,83 @@ workflow.onComplete {
 }
 workflow.onError {
 
-    println print_yellow("Oops... Pipeline execution stopped with the following message: ")+print_red(workflow.errorMessage)
+    println LikeletUtils.print_yellow("Oops... Pipeline execution stopped with the following message: ")+print_red(workflow.errorMessage)
+}
+
+
+
+
+
+
+
+def minimalInformationMessage() {
+
+    println LikeletUtils.print_purple("You are running RNAseqPipe-SYSUCC with the following parameters:")
+    println LikeletUtils.print_purple("Checking parameters ...")
+    println LikeletUtils.print_yellow("=====================================")
+    println LikeletUtils.print_yellow("Fastq file extension:           ") + print_green(params.read)
+    println LikeletUtils.print_yellow("Single end :                    ") + print_green(params.singleEnd)
+    println LikeletUtils.print_yellow("Strand specific condition:      ") + print_green(params.strand)
+    println LikeletUtils.print_yellow("Output folder:                  ") + print_green(params.outdir)
+    println LikeletUtils.print_yellow("STAR index path:                ") + print_green(params.star_index)
+    println LikeletUtils.print_yellow("GTF path:                       ") + print_green(params.gene_gtf)
+    println LikeletUtils.print_yellow("") + print_green(params.designfile)
+    println LikeletUtils.print_yellow("Compare file path:              ") + print_green(params.comparefile)
+    println LikeletUtils.print_yellow("=====================================")
+    println "\n"
+    // Minimal information message
+    println LikeletUtils.print_green("-------------------------------------------------------------")
+    println LikeletUtils.print_green("                       Checking Parameters                   ")
+    println LikeletUtils.print_green("-------------------------------------------------------------")
+    checkAnalysis("\tFastq file extension:           ",params.read)
+    checkAnalysis("\tSingle end :                    ",params.singleEnd)
+    checkAnalysis("\tStrand specific condition:      ",params.strand)
+    checkAnalysis("\tOutput folder:                  ",params.outdir)
+    checkAnalysis("\tSTAR index path:                ",params.star_index)
+    checkAnalysis("\tGTF path:                       ",params.gene_gtf)
+    checkAnalysis("\tDesign file  path:              ",params.designfile)
+    checkAnalysis("\tCompare file path:              ",params.comparefile)
+    println LikeletUtils.print_green("-------------------------------------------------------------")
+}
+
+
+def helpMessage(){
+
+    println ''
+    println LikeletUtils.print_purple('------------------------------------------------------------------------')
+    println "RNAseqPipe_SYSUCC:  v$version"
+    println LikeletUtils.print_purple('------------------------------------------------------------------------')
+    println ''
+    println LikeletUtils.print_yellow('Usage: ')
+    println LikeletUtils.print_yellow('    The typical command for running the pipeline is as follows (we do not recommend users passing configuration parameters through command line, please modify the config.file instead):\n') 
+            LikeletUtils.print_purple('       Nextflow run RNAseqPipe/main.nf ') +
+
+            LikeletUtils.print_yellow('    General arguments:             Input and output setting') 
+            print_parmeter('--inputdir <path> ','Path to input data(optional), current path default') 
+            print_parmeter('--reads <*_fq.gz> ','Filename pattern for pairing raw reads, e.g: *_{1,2}.fastq.gz for paired reads') 
+            print_parmeter('--outdir <path> ','The output directory where the results will be saved(optional), current path is default') 
+            print_parmeter('Options: General options for run this pipeline') 
+            print_parmeter('--designfile <file>' ,'A flat file stored the experimental design information ( required when perform differential expression analysis)') 
+            print_parmeter('--comparefile <file>' ,'A flat file stored comparison information ( required when perform differential expression analysis, e.g )') 
+            print_parmeter(' --singleEnd','Reads type, True for single ended ') 
+            print_parmeter('--unstrand','RNA library construction strategy, specified for \'unstranded\' library ') 
+            print_parmeter('--without_replicate ,'Specified when no replicates design involved, must provide  \'compare.txt\' file at the same time') 
+            print_parmeter('--IDEA' ,'Run pre processing step for IDEA(http://idea.renlab.org) )')
+            LikeletUtils.print_yellow('    References:                      If not specified in the configuration file or you wish to overwrite any of the references.') 
+            print_parmeter('--fasta','Path to Fasta reference(required)') +
+            print_parmeter('--gene_gtf' ,'An annotation file from GENCODE database in GTF format (required)\n') 
+            LikeletUtils.print_yellow('    Other options:                   Specify the email and ') +
+            print_parmeter('--mail' ,'email info for reporting status of your LncPipe execution  \n') +
+
+
+
+    println '------------------------------------------------------------------------'
+    println LikeletUtils.print_yellow('Contact information: zhaoqi@sysucc.org.cn')
+    println LikeletUtils.print_yellow('Copyright (c) 2013-2018, Sun Yat-sen University Cancer Center.')
+    println '------------------------------------------------------------------------'
+
+}
+
+def print_parameter(content, parameter){
+    println LikeletUtils.print_cyan(LikeletUtils,addstringToalign(content, 30))+LikeletUtils.print_green(parameter)
 }

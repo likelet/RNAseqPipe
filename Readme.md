@@ -6,27 +6,14 @@
     nextflow run RNAseqPipe/main.nf -profile c2 --read "*_{1,2}.fq.gz" --designfile "design.file" --comparefile "compare.txt"
 
 ### Documentation
-The SYSUCC-RNAseqPipe pipeline comes with documentation about the pipeline, found in the `docs/` directory:
+The SYSUCC-RNAseqPipe pipeline comes with documentation about the pipeline, found in the `docs/` directory:  
+
+please find the information in [wiki](https://github.com/likelet/RNAseqPipe/wiki)  
 
 1. [Installation and configuration](docs/Installation.md)
 2. [Running the pipeline](docs/usage.md)
 3. [Output and how to interpret the results](docs/output.md)
 
-### Pipeline Steps
-
-The pipeline allows you to choose between running either replicates or without replicates.
-Choose between workflows by using `--without_replicate` or not(default) .
-
-| Step                                         | With replicates  | without_replicate     |
-|----------------------------------------------|------------------|-----------------------|
-| Raw data QC                                  | Fastp            | Fastp                 |
-| Align Reads                                  | STAR             | STAR                  |
-| Alignment QC                                 | Qualimap         | Qualimap              |
-| Reads counting                               | RSEM             | RSEM                  |
-| Matrix collapses                             | DAtools          | DAtools               |
-| Differential expression                      | DESeq2           | Poisson Test(DAtools) |
-| Gene Set enrichment Analysis                 | GSEA             | -                     |
-| Summary Report                               | MultiQC          | MultiQC               |
 
 
 ### Dependencies 
