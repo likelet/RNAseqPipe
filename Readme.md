@@ -1,5 +1,7 @@
 
 # SYSUCC-RNAseqPipe
+[![Documentation Status](https://readthedocs.org/projects/rnaseqpipe/badge/?version=latest)](https://rnaseqpipe.readthedocs.io/en/latest/?badge=latest)
+
 
 ### Quick start  for reproductive analysis 
 
