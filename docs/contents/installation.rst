@@ -28,7 +28,7 @@ See `nextflow.io <https://www.nextflow.io/>`_ for further instructions on how to
 
 The whole pipeline is hosted in github. To install, you'll need to download and transfer the pipeline files manually:
 
-.. code-block:: bash
+.. code-block:: bash  
 
     # create directory 
     mkdir -p ~/my-pipelines/
@@ -39,9 +39,9 @@ The whole pipeline is hosted in github. To install, you'll need to download and 
     nextflow run ~/my-pipelines/RNAseqPipe -profile test
 
 
-To stop nextflow from looking for updates online, you can tell it to run in offline mode by specifying the following environment variable in your ~/.bashrc file:::
+To stop nextflow from looking for updates online, you can tell it to run in offline mode by specifying the following environment variable in your ~/.bashrc file:
 
-.. code-block:: bash
+.. code-block:: bash  
 
     export NXF_OFFLINE='TRUE'
 
@@ -99,3 +99,12 @@ If you're not able to use Docker _or_ Singularity, you can instead use conda to 
 This is slower and less reproducible than the above, but is still better than having to install all requirements yourself!
 The pipeline ships with a conda environment file and nextflow has built-in support for this.
 To use it first ensure that you have conda installed (we recommend `miniconda<https://conda.io/miniconda.html>`_, then follow the same pattern as above and use the flag ``-profile standard,conda``
+
+.. note:: When using ``conda`` profile, users should preinstalled DAtools in your system and specify the path in config files. 
+          To get the DAtools plz using the following command: 
+            .. code-block:: bash
+            
+                            curl http://cancerbio.info/pub/DATOOLS/DAtools_v2.7.4.jar 
+                            chmod 777 DAtools_v2.7.4.jar 
+                            mv DAtools_v2.7.4.jar /opt/
+
