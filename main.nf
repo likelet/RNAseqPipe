@@ -311,6 +311,11 @@ process run_qualimap{
     output:
     file "*" into qualimap_result_for_multiqc
 
+
+    when:
+    !params.skip_qualimap
+
+
     shell:
     file_tag = samplename
     file_tag_new = file_tag
@@ -503,7 +508,7 @@ process Run_MultiQC {
     file "*_data"
 
     when:
-    !params.skip_multiqc
+    !params.skip_multiqc & !params.skip_qualimap
 
     script:
     """
