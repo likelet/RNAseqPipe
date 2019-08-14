@@ -17,5 +17,4 @@
   * Qi Zhao ([@qi_likelet](https://github.com/likelet/))
 * Contributors:
   * Xiaolong Zhang
-  * Rucheng Diao
-  * Kaiyu 
+  * Kai Yu 
