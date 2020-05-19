@@ -34,10 +34,8 @@
 version="0.0.1"
 //=======================================================================================
 // Nextflow Version check
-if( !nextflow.version.matches('0.30+') ) {
-    println LikelikeUtils.print_yellow("This workflow requires Nextflow version 0.26 or greater -- You are running version ")+ LikelikeUtils.print_red(nextflow.version)
-    exit 1
-}
+    println LikeletUtils.print_yellow("This workflow requires Nextflow version 19.0.0 or greater -- You are running version ")+ LikeletUtils.print_red(nextflow.version)
+
 
 
 params.help = null
@@ -56,30 +54,49 @@ params.email = false
 mail=params.email
 // read file
 datoolPath = file(params.dapath)
-if( !datoolPath.exists() ) exit 1, print_red("DAtools  not found: ${params.dapath}")
-gene_gtf = file(params.gene_gtf)
-if( !gene_gtf.exists() ) exit 1, print_red("GTF file not found: ${params.gene_gtf}")
+if( !datoolPath.exists() ) exit 1, LikeletUtils.print_red("DAtools  not found: ${params.dapath}")
+
+
+
+// Check if genome exists in the config file
+if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
+    exit 1, "The provided genome '${params.genome}' is not available in the iGenomes file. Currently the available genomes are ${params.genomes.keySet().join(", ")}"
+}
+
+
+// Reference index path configuration
+// Define these here - after the profiles are loaded with the iGenomes paths
+params.star_index = params.genome ? params.genomes[ params.genome ].star_index ?: false : false
+params.gtf = params.genome ? params.genomes[ params.genome ].gtf ?: false : false
+
+
+
+gene_gtf = file(params.gtf)
+if( !gene_gtf.exists() ) exit 1, LikeletUtils.print_red("GTF file not found: ${params.gtf}")
 // star-rsem index
-star_index =  params.star_index
+star_index = params.star_index
 gseapath = params.gseapath
 gsea_pathway = params.gsea_pathway
 
 //design file
 if(params.designfile) {
     designfile = file(params.designfile)
-    if( !designfile.exists() ) exit 1, print_red("Design file not found: ${params.designfile}")
+    if( !designfile.exists() ) exit 1, LikeletUtils.print_red("Design file not found: ${params.designfile}")
 }else{
-    designfile=null
+    designfile=Channel.empty()
 }
 //compare.txt
 if(params.comparefile){
     File comparefile = new File(params.comparefile)
-    if( !comparefile.exists() ) exit 1, print_red("Compare file not found: ${params.comparefile}")
+    if( !comparefile.exists() ) exit 1, LikeletUtils.print_red("Compare file not found: ${params.comparefile}")
     compareLines = Channel.from(comparefile.readLines())
+
+    compareLines.into{CompareLines_for_DE; CompareLines_for_GSEA;CompareLines_for_DE_without_REP}
 }else{
-    compareLines=""
+    compareLines=Channel.empty()
+    compareLines.into{CompareLines_for_DE; CompareLines_for_GSEA;CompareLines_for_DE_without_REP}
 }
-compareLines.into{compareLines_for_DE; compareLines_for_GSEA;compareLines_for_DE_without_REP}
+
 
 
 //Checking parameters
@@ -94,15 +111,15 @@ reads = params.read
 
 Channel.fromFilePairs(reads, size: params.singleEnd ? 1 : 2)
         .ifEmpty {
-    exit 1, print_red("Cannot find any reads matching: ${reads}\nPlz check your read string in nextflow.config file \n")
+    exit 1, LikeletUtils.print_red("Cannot find any reads matching: ${reads}\nPlz check your read string in nextflow.config file \n")
 }
 .set { reads_for_fastqc}
 
 
 if(params.skip_qc){
-    println print_yellow("Skip reads qc process, directly do mapping ")
+    println LikeletUtils.print_yellow("Skip reads qc process, directly do mapping ")
     process RSEM_quantification_without_fastp  {
-
+        maxForks params.maxForkNum
         tag { file_tag }
         label 'para'
 
@@ -117,15 +134,15 @@ if(params.skip_qc){
         set val(file_tag_new), file ("${file_tag_new}.STAR.genome.bam") into bamfile_for_qualimap
 
         shell:
-        println print_purple("Start analysis with RSEM  " + samplename)
+        println LikeletUtils.print_purple("Start analysis with RSEM  " + samplename)
         file_tag = samplename
         file_tag_new = file_tag
 
 
         if(params.singleEnd){
-            println print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end  mode")
+            println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end  mode")
              if(params.strand){
-                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
+                println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
                 """
                         rsem-calculate-expression -p ${task.cpus} \
                             --no-bam-output --star \
@@ -137,7 +154,7 @@ if(params.skip_qc){
                             
                 """
             }else{
-                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
+                println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
                 """
                     rsem-calculate-expression -p ${task.cpus} \
                         --no-bam-output --star \
@@ -149,10 +166,10 @@ if(params.skip_qc){
             """
             }
         } else{
-            println print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end  mode")
+            println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end  mode")
                 
             if(params.strand){
-                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
+                println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
                 """
                         rsem-calculate-expression -p ${task.cpus} \
                             --no-bam-output --star \
@@ -164,7 +181,7 @@ if(params.skip_qc){
                             
                 """
             }else{
-                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
+                println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
                 """
                     rsem-calculate-expression -p ${task.cpus} \
                         --no-bam-output --star \
@@ -220,7 +237,7 @@ if(params.skip_qc){
  Step : Quantification  by star and RSEM
  */
     process RSEM_quantification {
-
+        maxForks params.maxForkNum
         tag { file_tag }
         label 'para'
 
@@ -235,14 +252,14 @@ if(params.skip_qc){
         file "${file_tag_new}.genes.results" into counting_file,couting_file_DE_without_Rep
         set val(file_tag_new), file ("${file_tag_new}.STAR.genome.bam") into bamfile_for_qualimap
         shell:
-        println print_purple("Start analysis with RSEM  " + samplename)
+        println LikeletUtils.print_purple("Start analysis with RSEM  " + samplename)
         file_tag = samplename
         file_tag_new = file_tag
 
     if(params.singleEnd){
-            println print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end  mode")
+            println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in single-end  mode")
              if(params.strand){
-                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
+                println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
                 """
                         rsem-calculate-expression -p ${task.cpus} \
                             --no-bam-output --star \
@@ -250,7 +267,7 @@ if(params.skip_qc){
                             --star-output-genome-bam \
                             --estimate-rspd --time \
                             --strand-specific \
-                            ${pair[0]} ${star_index} ${file_tag_new}
+                            ${pair[0]} ${index} ${file_tag_new}
                             
                 """
             }else{
@@ -266,10 +283,10 @@ if(params.skip_qc){
             """
             }
         } else{
-            println print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end  mode")
+            println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in paired-end  mode")
                 
             if(params.strand){
-                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
+                println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in Strand specific  mode")
                 """
                         rsem-calculate-expression -p ${task.cpus} \
                             --no-bam-output --star \
@@ -281,7 +298,7 @@ if(params.skip_qc){
                             
                 """
             }else{
-                println print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
+                println LikeletUtils.print_purple("Initial reads mapping of " + samplename + " performed by STAR in non strand  mode")
                 """
                     rsem-calculate-expression -p ${task.cpus} \
                         --no-bam-output --star \
@@ -299,6 +316,7 @@ if(params.skip_qc){
 }
 
 process run_qualimap{
+    
     tag { file_tag }
 
     publishDir pattern: "*.pdf",
@@ -342,8 +360,8 @@ process collapse_matrix{
     file gene_gtf
 
     output:
-    file "${samplename}.count.matrix" into count_matrix, count_for_IDEA
-    file "forDE.count.matrix" into count_matrix_forDE
+    file "${samplename}.count.matrix" into count_matrix
+    file "forDE.count.matrix" into count_matrix_forDE, Count_for_IDEA
     file "${samplename}.tpm.matrix" into tpm_matrix_forDE
     file "${samplename}.fpkm.matrix" into fpkm_matrix_for_GSEA
     shell:
@@ -360,33 +378,59 @@ process collapse_matrix{
     """
 
 }
+
+
 /*
  generate IDEA input file 
 */
+if( params.designfile){
+    process IDEA_Input_generate{
+        publishDir pattern: "*.csv",
+                    path: { params.outdir + "/IDEA_Input" }, mode: 'move', overwrite: true
 
-process IDEA_Input_generate{
-publishDir pattern: "*.csv",
-            path: { params.outdir + "/IDEA_Input" }, mode: 'move', overwrite: true
+        input:
+        file count_matrix from Count_for_IDEA
+        file designfile
 
-    input:
-    file count_matrix from count_for_IDEA
-    file designfile
+        output:
+        file "*"
 
-    output:
-    file "*"
+        shell:
+        
+        '''
+        sed 's/\t/,/g' !{count_matrix} > count.matrix.csv
+        sed 's/\t/,/g' !{designfile} > design.csv
+        '''
 
-    shell:
-    
-    '''
-     sed 's/\t/,/g' !{count_matrix} > count.matrix.csv
-     sed 's/\t/,/g' !{designfile} > design.csv
-    '''
+    }
+}else{
+    process IDEA_Input_generate_without{
+        publishDir pattern: "*.csv",
+                    path: { params.outdir + "/IDEA_Input" }, mode: 'move', overwrite: true
 
+        input:
+        file count_matrix from Count_for_IDEA
+
+        output:
+        file "*"
+
+        shell:
+        '''
+        sed 's/\t/,/g' !{count_matrix} > count.matrix.csv
+        '''
+
+    }
 }
+
+
+
 /*
   Differential expression analysis && GSEA
  */
 if( params.designfile && params.comparefile ){
+
+
+
 // DE
     process Differential_Expression_analysis{
         tag {file_tag}
@@ -398,11 +442,11 @@ if( params.designfile && params.comparefile ){
 
         file countMatrix from count_matrix_forDE
         file designfile
-        val compare_str from compareLines_for_DE
+        val compare_str from CompareLines_for_DE
 
         output:
 
-        set val(comstr),file("${comstr}.deseq.xls") into DE_result
+        set val(comstr),file("${comstr}.deseq.xls") into DE_result,DE_result_forKEGG
         file "*" into DE_result_out
 
         shell:
@@ -416,6 +460,8 @@ if( params.designfile && params.comparefile ){
 
     }
 
+
+
 /*
  Gene Set Enrichment Analysis
  */
@@ -428,14 +474,14 @@ if( params.designfile && params.comparefile ){
         input:
         file fpkm_matrix from fpkm_matrix_for_GSEA
         file designfile
-        val compare_str from compareLines_for_GSEA
+        val compare_str from CompareLines_for_GSEA
 
 
         output:
         file "${compare_str}*" into gsea_out
 
         when:
-        !params.skip_gsea
+        !params.skip_gsea 
 
         shell:
         file_tag = compare_str
@@ -471,7 +517,7 @@ if(params.comparefile && params.without_replicate) {
 
         file abundance_tsv_matrix from couting_file_DE_without_Rep.collect()
         file gene_gtf
-        val compare_str from compareLines_for_DE_without_REP
+        val compare_str from CompareLines_for_DE_without_REP
 
         output:
 
@@ -548,7 +594,7 @@ workflow.onComplete {
 }
 workflow.onError {
 
-    println LikeletUtils.print_yellow("Oops... Pipeline execution stopped with the following message: ")+print_red(workflow.errorMessage)
+    println LikeletUtils.print_yellow("Oops... Pipeline execution stopped with the following message: ")+LikeletUtils.print_red(workflow.errorMessage)
 }
 
 
@@ -559,17 +605,6 @@ workflow.onError {
 
 def minimalInformationMessage() {
 
-    println LikeletUtils.print_purple("You are running RNAseqPipe-SYSUCC with the following parameters:")
-    println LikeletUtils.print_purple("Checking parameters ...")
-    println LikeletUtils.print_yellow("=====================================")
-    println LikeletUtils.print_yellow("Fastq file extension:           ") + print_green(params.read)
-    println LikeletUtils.print_yellow("Single end :                    ") + print_green(params.singleEnd)
-    println LikeletUtils.print_yellow("Strand specific condition:      ") + print_green(params.strand)
-    println LikeletUtils.print_yellow("Output folder:                  ") + print_green(params.outdir)
-    println LikeletUtils.print_yellow("STAR index path:                ") + print_green(params.star_index)
-    println LikeletUtils.print_yellow("GTF path:                       ") + print_green(params.gene_gtf)
-    println LikeletUtils.print_yellow("") + print_green(params.designfile)
-    println LikeletUtils.print_yellow("Compare file path:              ") + print_green(params.comparefile)
     println LikeletUtils.print_yellow("=====================================")
     println "\n"
     // Minimal information message
@@ -581,7 +616,7 @@ def minimalInformationMessage() {
     checkAnalysis("\tStrand specific condition:      ",params.strand)
     checkAnalysis("\tOutput folder:                  ",params.outdir)
     checkAnalysis("\tSTAR index path:                ",params.star_index)
-    checkAnalysis("\tGTF path:                       ",params.gene_gtf)
+    checkAnalysis("\tGTF path:                       ",params.gtf)
     checkAnalysis("\tDesign file  path:              ",params.designfile)
     checkAnalysis("\tCompare file path:              ",params.comparefile)
     println LikeletUtils.print_green("-------------------------------------------------------------")
@@ -608,13 +643,13 @@ def helpMessage(){
             print_parmeter('--comparefile <file>' ,'A flat file stored comparison information ( required when perform differential expression analysis, e.g )') 
             print_parmeter(' --singleEnd','Reads type, True for single ended ') 
             print_parmeter('--unstrand','RNA library construction strategy, specified for \'unstranded\' library ') 
-            print_parmeter('--without_replicate ,'Specified when no replicates design involved, must provide  \'compare.txt\' file at the same time') 
+            print_parmeter('--without_replicate' ,'Specified when no replicates design involved, must provide  \'compare.txt\' file at the same time') 
             print_parmeter('--IDEA' ,'Run pre processing step for IDEA(http://idea.renlab.org) )')
             LikeletUtils.print_yellow('    References:                      If not specified in the configuration file or you wish to overwrite any of the references.') 
             print_parmeter('--fasta','Path to Fasta reference(required)') +
             print_parmeter('--gene_gtf' ,'An annotation file from GENCODE database in GTF format (required)\n') 
             LikeletUtils.print_yellow('    Other options:                   Specify the email and ') +
-            print_parmeter('--mail' ,'email info for reporting status of your LncPipe execution  \n') +
+            print_parmeter('--mail' ,'email info for reporting status of your LncPipe execution  \n') 
 
 
 
@@ -627,4 +662,8 @@ def helpMessage(){
 
 def print_parameter(content, parameter){
     println LikeletUtils.print_cyan(LikeletUtils,addstringToalign(content, 30))+LikeletUtils.print_green(parameter)
+}
+
+def checkAnalysis(software,param){
+if(param) println LikeletUtils.print_yellow(software)+LikeletUtils.print_green(param)
 }

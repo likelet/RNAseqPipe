@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="486564ba-731b-41d1-ac64-f322055a730d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/contents/Installation.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/contents/parameters.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/contents/usage.md" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/C2.config" afterPath="$PROJECT_DIR$/conf/C2.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/template.config" afterPath="$PROJECT_DIR$/conf/template.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/test.config" afterPath="$PROJECT_DIR$/conf/test.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/contents/licencing.rst" afterPath="$PROJECT_DIR$/docs/contents/licencing.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/contents/output.rst" afterPath="$PROJECT_DIR$/docs/contents/output.rst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.nf" afterPath="$PROJECT_DIR$/main.nf" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -20,8 +26,8 @@
       <file leaf-file-name="main.nf" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.nf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12504">
-              <caret line="521" column="22" lean-forward="false" selection-start-line="521" selection-start-column="21" selection-end-line="521" selection-end-column="22" />
+            <state relative-caret-position="12720">
+              <caret line="530" column="22" lean-forward="false" selection-start-line="530" selection-start-column="22" selection-end-line="530" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -30,7 +36,7 @@
       <file leaf-file-name="test.groovy" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/test.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
+            <state relative-caret-position="528">
               <caret line="24" column="18" lean-forward="false" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -43,7 +49,7 @@
         <entry file="file://$PROJECT_DIR$/conf/C2.config">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="72">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="11" selection-end-column="1" />
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="14" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -83,8 +89,23 @@
         <entry file="file://$PROJECT_DIR$/nextflow.config">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
-              <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="21" />
-              <folding />
+              <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+              <folding>
+                <marker date="1550316556000" expanded="true" signature="6:149" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="1151:1157" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="1151:1160" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="1284:1344" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="1352:1410" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="1417:1473" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="1484:1632" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="1634:1717" ph="..." />
+                <marker date="1550316556000" expanded="true" signature="1769:2157" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="1783:1989" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="2002:2151" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="2181:2557" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="2195:2393" ph="{...}" />
+                <marker date="1550316556000" expanded="true" signature="2406:2551" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -182,7 +203,6 @@
         <option value="$PROJECT_DIR$/bin/GO_KEGG_Reactome_enrich_DEG.R" />
         <option value="$PROJECT_DIR$/bin/GSEA_prepare.pl" />
         <option value="$PROJECT_DIR$/compare.txt" />
-        <option value="$PROJECT_DIR$/conf/C2.config" />
         <option value="$PROJECT_DIR$/bin/get_preRankfile_for_GSEA.pl" />
         <option value="$PROJECT_DIR$/conf/C1.config" />
         <option value="$PROJECT_DIR$/nextflow.config" />
@@ -194,14 +214,15 @@
         <option value="$PROJECT_DIR$/environment.yml" />
         <option value="$PROJECT_DIR$/main.nf" />
         <option value="$PROJECT_DIR$/lib/test.groovy" />
+        <option value="$PROJECT_DIR$/conf/C2.config" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2560" />
-    <option name="y" value="383" />
+    <option name="x" value="208" />
+    <option name="y" value="23" />
     <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="height" value="1079" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -219,7 +240,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -276,8 +299,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -752,7 +773,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2560" y="383" width="1920" height="1057" extended-state="6" />
+    <frame x="208" y="23" width="1920" height="1079" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -768,7 +789,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1062,7 +1083,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="864">
             <caret line="36" column="50" lean-forward="false" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -1105,8 +1125,23 @@
     <entry file="file://$PROJECT_DIR$/nextflow.config">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
-          <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="21" />
-          <folding />
+          <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+          <folding>
+            <marker date="1550316556000" expanded="true" signature="6:149" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="1151:1157" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="1151:1160" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="1284:1344" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="1352:1410" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="1417:1473" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="1484:1632" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="1634:1717" ph="..." />
+            <marker date="1550316556000" expanded="true" signature="1769:2157" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="1783:1989" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="2002:2151" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="2181:2557" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="2195:2393" ph="{...}" />
+            <marker date="1550316556000" expanded="true" signature="2406:2551" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1120,9 +1155,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.nf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12504">
-          <caret line="521" column="22" lean-forward="false" selection-start-line="521" selection-start-column="21" selection-end-line="521" selection-end-column="22" />
+        <state relative-caret-position="12720">
+          <caret line="530" column="22" lean-forward="false" selection-start-line="530" selection-start-column="22" selection-end-line="530" selection-end-column="22" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/test.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="24" column="18" lean-forward="false" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1134,20 +1179,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/test.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="24" column="18" lean-forward="false" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/conf/C2.config">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="11" selection-end-column="1" />
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="14" selection-end-column="1" />
           <folding />
         </state>
       </provider>

@@ -14,8 +14,7 @@ dependencies:
   - r-pheatmap=1.0.10
   - r-ggplot2=3.0.0
   - r-ggrepel=0.8.0
-  - r-factominer
-  - r-ggpubr
+  - r-factominer=2.3
+  - r-ggpubr=0.3.0
   - pandoc=2.3.1
   - multiqc-bcbio=0.2.6
-  - rmats
