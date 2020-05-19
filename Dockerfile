@@ -1,7 +1,7 @@
 FROM nfcore/base
 MAINTAINER Qi Zhao <zhaoqi@sysucc.org.cn>
 LABEL authors="zhaoqi@sysucc.org.cn" \
-    description="Docker image containing all requirements for the nfcore/lncpipe pipeline"
+    description="Docker image containing all requirements for the sysucc/rnaseq pipeline"
 
 COPY environment.yml /
 RUN conda env create -f /environment.yml && conda clean -a
