@@ -10,6 +10,6 @@ ENV PATH /opt/conda/envs/nf-core-lncpipe-1.0dev/bin:$PATH
 
 # Install DAtools 
 
-RUN curl http://cancerbio.info/pub/DATOOLS/DAtools_v2.7.4.jar  && \
+RUN curl http://omicsbio.info/pub/DATOOLS/DAtools_v2.7.4.jar  && \
     chmod 777 DAtools_v2.7.4.jar  && \
-    mv DAtools_v2.7.4.jar /opt/
+    mv DAtools_v2.7.4.jar /opt/datools.jar
