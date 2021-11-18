@@ -17,3 +17,13 @@ dependencies:
   - r-ggpubr=0.3.0
   - pandoc=2.3.1
   - multiqc-bcbio=0.2.6
+  - bioconductor-enhancedvolcano
+  - r-dt
+  - bioconductor-clusterprofiler=4.2.0
+  - r-ggthemes=4.2.4
+  - bioconductor-org.hs.eg.db=3.14.0
+  - bioconductor-org.mm.eg.db=3.14.0
+  - r-rcolorbrewer=1.1_2
+  - bioconductor-pcatools=2.6.0
+  - r-reshape2=1.4.4
+  - r-cowplot=1.1.1
