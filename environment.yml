@@ -27,3 +27,5 @@ dependencies:
   - bioconductor-pcatools=2.6.0
   - r-reshape2=1.4.4
   - r-cowplot=1.1.1
+  - bioconductor-reactomepa=1.38.0
+  - r-msigdbr=7.4.1
